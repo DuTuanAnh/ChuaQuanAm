@@ -1,0 +1,76 @@
+/* PrimeNG dropdown alignment with our cream + brass palette. */
+:host ::ng-deep .p-dropdown {
+  width: 100%;
+  border-radius: 9999px;
+  border-color: var(--line, #d9ccb6);
+  background: #fdf8ef;
+  height: 46px;
+
+  &:not(.p-disabled).p-focus {
+    border-color: #b8860b;
+    box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.18);
+  }
+
+  .p-dropdown-label {
+    padding: 0.6rem 1rem;
+    color: #1f140c;
+    font-size: 0.9rem;
+  }
+
+  .p-dropdown-trigger {
+    color: #8b7b6a;
+  }
+}
+
+:host ::ng-deep .p-dropdown-panel {
+  border-radius: 16px;
+  border: 1px solid #d9ccb6;
+  box-shadow: 0 24px 48px -16px rgba(61, 43, 31, 0.22);
+
+  .p-dropdown-item {
+    padding: 0.6rem 1rem;
+    color: #1f140c;
+
+    &.p-highlight {
+      background: rgba(184, 134, 11, 0.18);
+      color: #3d2b1f;
+    }
+
+    &:not(.p-highlight):hover {
+      background: rgba(122, 90, 69, 0.08);
+    }
+  }
+}
+
+/* Paginator — restrained brown buttons, brass for current page. */
+:host ::ng-deep .phap-thoai-paginator.p-paginator {
+  background: transparent;
+  padding: 0.5rem;
+
+  .p-paginator-pages .p-paginator-page,
+  .p-paginator-first,
+  .p-paginator-prev,
+  .p-paginator-next,
+  .p-paginator-last {
+    color: #5a4030;
+    border-radius: 9999px;
+    min-width: 38px;
+    height: 38px;
+
+    &:not(.p-disabled):not(.p-highlight):hover {
+      background: rgba(122, 90, 69, 0.1);
+      color: #3d2b1f;
+    }
+  }
+
+  .p-paginator-pages .p-paginator-page.p-highlight {
+    background: #3d2b1f;
+    color: #fdf8ef;
+  }
+
+  .p-paginator-current {
+    color: #8b7b6a;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+  }
+}

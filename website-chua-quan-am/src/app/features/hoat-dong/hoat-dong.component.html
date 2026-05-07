@@ -1,0 +1,196 @@
+<!-- ============ HEADER ============ -->
+<section class="container-narrow pt-16 md:pt-24 pb-8 text-center">
+  <span class="eyebrow">Sinh hoạt cộng đồng</span>
+  <h1 class="mt-4 font-display font-medium text-4xl md:text-6xl text-brown-deep leading-tight">
+    Hoạt động &amp; <em class="italic text-brass">pháp hội</em>
+  </h1>
+  <p class="mt-5 max-w-2xl mx-auto text-base md:text-lg text-ink/75 leading-relaxed">
+    Lịch các đại lễ Bắc Tông, khoá tu, sinh hoạt định kỳ và phóng sinh tại chùa.
+    Thân mời quý Phật tử về chùa cùng tham dự.
+  </p>
+</section>
+
+<!-- ============ CHIPS ============ -->
+<section class="container-narrow pb-6">
+  <div class="flex flex-wrap justify-center gap-2 md:gap-3">
+    @for (chip of chips; track chip.value) {
+      <button
+        type="button"
+        (click)="selectChip(chip.value)"
+        class="px-5 py-2 rounded-full text-sm font-medium border transition-all"
+        [class.bg-brown-deep]="selectedType() === chip.value"
+        [class.text-cream]="selectedType() === chip.value"
+        [class.border-brown-deep]="selectedType() === chip.value"
+        [class.shadow-soft]="selectedType() === chip.value"
+        [class.bg-cream]="selectedType() !== chip.value"
+        [class.text-ink]="selectedType() !== chip.value"
+        [class.border-line]="selectedType() !== chip.value"
+        [class.hover:border-brass]="selectedType() !== chip.value"
+        [class.hover:text-brown-deep]="selectedType() !== chip.value"
+      >
+        {{ chip.label }}
+      </button>
+    }
+  </div>
+</section>
+
+<!-- ============ CALENDAR + TIMELINE ============ -->
+<section class="container-narrow pb-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+  <!-- Calendar (sticky on desktop) -->
+  <aside class="lg:col-span-4" data-aos="fade-down">
+    <div class="lg:sticky lg:top-28">
+      <div class="rounded-2xl border border-line bg-cream p-4 shadow-soft">
+        <p-calendar
+          [(ngModel)]="selectedCalendarDate"
+          [inline]="true"
+          [showOtherMonths]="false"
+          (onSelect)="onDateSelect($event)"
+          styleClass="hoat-dong-calendar"
+        >
+          <ng-template pTemplate="date" let-d>
+            <span class="cal-day" [class.has-event]="hasEventOn(d)">
+              {{ d.day }}
+            </span>
+          </ng-template>
+        </p-calendar>
+
+        <div class="mt-4 px-2 flex items-center gap-2 text-xs text-muted">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-brass"></span>
+          <span>Ngày có sự kiện</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Timeline -->
+  <div class="lg:col-span-8">
+    @if (loading()) {
+      <p class="text-muted italic">Đang tải lịch sự kiện…</p>
+    } @else if (events().length === 0) {
+      <div class="text-center py-16 text-muted italic font-display">
+        Không có sự kiện phù hợp với bộ lọc.
+      </div>
+    } @else {
+      <!-- ===== UPCOMING ===== -->
+      @if (upcomingGroups().length > 0) {
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-display italic text-brass text-lg">Sắp tới</span>
+          <span class="flex-1 h-px bg-line"></span>
+        </div>
+
+        <ol class="space-y-6 mb-14">
+          @for (group of upcomingGroups(); track group.dateKey; let idx = $index) {
+            <li
+              [id]="'day-' + group.dateKey"
+              class="rounded-2xl border border-line bg-cream p-5 md:p-6 transition-shadow"
+              data-aos="fade-up"
+              [attr.data-aos-delay]="(idx % 6) * 80"
+            >
+              <div class="flex flex-col md:flex-row md:items-stretch gap-5 md:gap-6">
+                <!-- Date badge -->
+                <div class="md:w-32 md:shrink-0 md:border-r md:border-line/60 md:pr-6 flex md:flex-col items-baseline md:items-start gap-3 md:gap-1">
+                  <span class="font-display text-[44px] md:text-[52px] leading-none text-brown-deep">
+                    {{ formatDayBig(group.date) }}
+                  </span>
+                  <div class="md:mt-2">
+                    <div class="font-display italic text-brass">{{ formatMonthLabel(group.date) }}</div>
+                    <div class="text-xs text-muted">{{ formatWeekday(group.date) }}</div>
+                  </div>
+                </div>
+
+                <!-- Event(s) on this day -->
+                <ul class="flex-1 space-y-5">
+                  @for (e of group.events; track e._id) {
+                    <li>
+                      <a
+                        [routerLink]="['/hoat-dong', e.slug.current]"
+                        class="group block"
+                      >
+                        <div class="flex items-start justify-between gap-3">
+                          <h3 class="font-display text-lg md:text-xl text-brown-deep leading-snug group-hover:text-brass transition-colors">
+                            {{ e.title }}
+                          </h3>
+                          <span class="px-2.5 py-1 rounded-full bg-cream-warm text-brown-deep text-[11px] uppercase tracking-wider font-medium shrink-0">
+                            {{ typeLabel(e.kind) }}
+                          </span>
+                        </div>
+                        @if (e.lunarDate) {
+                          <p class="mt-1 italic font-display text-sm text-brass">{{ e.lunarDate }}</p>
+                        }
+                        @if (e.excerpt) {
+                          <p class="mt-2 text-sm text-ink/75 leading-relaxed">{{ e.excerpt }}</p>
+                        }
+                        <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-muted">
+                          <span class="inline-flex items-center gap-1.5">
+                            <i class="pi pi-clock text-brass/70"></i>
+                            {{ formatTime(e.startsAt) }}
+                          </span>
+                          @if (e.location) {
+                            <span class="inline-flex items-center gap-1.5">
+                              <i class="pi pi-map-marker text-brass/70"></i>
+                              {{ e.location }}
+                            </span>
+                          }
+                        </div>
+                      </a>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </li>
+          }
+        </ol>
+      }
+
+      <!-- ===== PAST ===== -->
+      @if (pastGroups().length > 0) {
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-display italic text-muted text-lg">Đã diễn ra</span>
+          <span class="flex-1 h-px bg-line"></span>
+        </div>
+
+        <ol class="space-y-4 opacity-80">
+          @for (group of pastGroups(); track group.dateKey; let idx = $index) {
+            <li
+              [id]="'day-' + group.dateKey"
+              class="rounded-2xl border border-line bg-cream-warm/30 p-5"
+              data-aos="fade-up"
+              [attr.data-aos-delay]="(idx % 6) * 60"
+            >
+              <div class="flex flex-col md:flex-row md:items-stretch gap-5 md:gap-6">
+                <div class="md:w-32 md:shrink-0 md:border-r md:border-line/60 md:pr-6 flex md:flex-col items-baseline md:items-start gap-3 md:gap-1">
+                  <span class="font-display text-3xl md:text-4xl leading-none text-muted">
+                    {{ formatDayBig(group.date) }}
+                  </span>
+                  <div class="md:mt-2">
+                    <div class="font-display italic text-muted text-sm">
+                      {{ formatMonthLabel(group.date) }}
+                      <span class="ml-1">{{ group.date.getFullYear() }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <ul class="flex-1 space-y-3">
+                  @for (e of group.events; track e._id) {
+                    <li>
+                      <a [routerLink]="['/hoat-dong', e.slug.current]" class="group block">
+                        <div class="flex items-start justify-between gap-3">
+                          <h3 class="font-display text-base text-brown-deep group-hover:text-brass transition-colors">
+                            {{ e.title }}
+                          </h3>
+                          <span class="px-2 py-0.5 rounded-full border border-line text-[11px] text-muted shrink-0">
+                            {{ typeLabel(e.kind) }}
+                          </span>
+                        </div>
+                      </a>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </li>
+          }
+        </ol>
+      }
+    }
+  </div>
+</section>

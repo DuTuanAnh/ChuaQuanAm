@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'aos/dist/aos.css';
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream text-ink font-sans antialiased;
+    font-feature-settings: 'kern', 'liga';
+  }
+  h1, h2, h3, h4, h5 {
+    @apply font-display text-brown-deep;
+  }
+  a {
+    @apply transition-colors duration-200;
+  }
+  ::selection {
+    background: rgba(184, 134, 11, 0.25);
+  }
+}
+
+@layer components {
+  .container-narrow {
+    @apply mx-auto max-w-6xl px-6 md:px-10;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-3 font-display italic text-brass text-sm md:text-base;
+  }
+  .eyebrow::before,
+  .eyebrow::after {
+    content: '';
+    @apply inline-block h-px w-7;
+    background: linear-gradient(90deg, transparent, currentColor 40%, currentColor 60%, transparent);
+    opacity: 0.6;
+  }
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200;
+  }
+  .btn-primary {
+    @apply btn bg-brown-deep text-cream shadow-soft hover:bg-brown-mid hover:-translate-y-0.5;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-white/50 text-ink hover:border-brown-deep hover:text-brown-deep;
+  }
+}
+
+/* PrimeNG palette overrides toward brown+brass */
+:root {
+  --primary-color: #B8860B;
+  --primary-color-text: #F8F1E0;
+}
+.p-button:not(.p-button-text):not(.p-button-outlined) {
+  background: #3D2B1F;
+  border-color: #3D2B1F;
+}
+.p-button:not(.p-button-text):not(.p-button-outlined):hover {
+  background: #5A4030;
+  border-color: #5A4030;
+}
+
+/* PrimeNG Galleria fullscreen close button — large, high-contrast for elderly users.
+   Applies globally to every <p-galleria fullScreen>. */
+.p-galleria-close {
+  background: rgba(0, 0, 0, 0.7) !important;
+  border-radius: 50% !important;
+  width: 44px !important;
+  height: 44px !important;
+  border: 2px solid #ffffff !important;
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 9999 !important;
+  cursor: pointer !important;
+
+  .p-galleria-close-icon,
+  .p-icon {
+    color: #ffffff !important;
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.9) !important;
+    border-color: #D4A843 !important;
+    transform: scale(1.1) !important;
+    transition: all 0.2s ease !important;
+  }
+}

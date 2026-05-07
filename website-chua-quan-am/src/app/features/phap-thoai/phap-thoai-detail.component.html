@@ -1,0 +1,212 @@
+<!-- ============ Breadcrumb / back ============ -->
+<section class="container-narrow pt-10 pb-2">
+  <a
+    routerLink="/phap-thoai"
+    class="inline-flex items-center gap-2 text-sm text-muted hover:text-brown-deep transition-colors"
+  >
+    <i class="pi pi-arrow-left text-xs"></i>
+    <span>Quay lại danh sách pháp thoại</span>
+  </a>
+</section>
+
+@if (video(); as v) {
+  <!-- ============ HEADER ============ -->
+  <section class="container-narrow pt-6 pb-10">
+    <div class="max-w-3xl">
+      <span class="eyebrow">Pháp thoại</span>
+      <h1 class="mt-4 font-display font-medium text-3xl md:text-5xl text-brown-deep leading-tight">
+        {{ v.title }}
+      </h1>
+
+      <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+        @if (v.speaker) {
+          <span class="inline-flex items-center gap-2 italic font-display text-brass">
+            <i class="pi pi-user-edit"></i>
+            {{ v.speaker }}
+          </span>
+        }
+        <span class="inline-flex items-center gap-2 text-muted">
+          <i class="pi pi-calendar"></i>
+          {{ formatDate(v.publishedAt) }}
+        </span>
+        @if (formatDuration(v.durationSec); as dur) {
+          <span class="inline-flex items-center gap-2 text-muted">
+            <i class="pi pi-clock"></i>
+            {{ dur }}
+          </span>
+        }
+        @if (v.tags?.length) {
+          <span class="inline-flex flex-wrap items-center gap-2">
+            @for (tag of v.tags; track tag) {
+              <span class="px-2.5 py-1 rounded-full bg-cream-warm text-brown-deep text-xs">
+                {{ tag }}
+              </span>
+            }
+          </span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLAYER ============ -->
+  <section class="container-narrow pb-10">
+    <div class="max-w-4xl mx-auto">
+      <div class="player-frame relative aspect-video rounded-2xl overflow-hidden shadow-deep bg-brown-darker">
+        @switch (playerKind()) {
+          @case ('youtube') {
+            <youtube-player
+              [videoId]="v.youtubeId!"
+              [width]="1280"
+              [height]="720"
+            ></youtube-player>
+          }
+          @case ('upload') {
+            <video
+              [src]="v.videoUrl!"
+              controls
+              preload="metadata"
+              class="w-full h-full object-contain bg-black"
+            >
+              Trình duyệt của bạn không hỗ trợ video HTML5.
+            </video>
+          }
+          @case ('audio') {
+            <div class="w-full h-full grid place-items-center bg-gradient-to-br from-brown-mid to-brown-darker p-8">
+              <div class="text-center text-cream/85">
+                <i class="pi pi-volume-up text-5xl text-brass-bright mb-4 block"></i>
+                <p class="font-display italic mb-4">Bài giảng dạng âm thanh</p>
+                <audio [src]="v.audioUrl!" controls class="w-full max-w-md"></audio>
+              </div>
+            </div>
+          }
+          @default {
+            <div class="absolute inset-0 grid place-items-center bg-gradient-to-br from-brass-soft via-brass to-brown-deep text-cream/70">
+              <div class="text-center">
+                <svg viewBox="0 0 80 80" class="w-20 h-20 mx-auto mb-3">
+                  <circle cx="40" cy="40" r="38" fill="none" stroke="currentColor" stroke-width="1.5" />
+                  <path d="M32 26 L56 40 L32 54 Z" fill="currentColor" />
+                </svg>
+                <p class="font-display italic">Video chưa khả dụng — sẽ cập nhật sau.</p>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DESCRIPTION ============ -->
+  @if (v.excerpt) {
+    <section class="container-narrow pb-12">
+      <div class="max-w-3xl">
+        <h2 class="font-display text-2xl text-brown-deep mb-4">Giới thiệu</h2>
+        <p class="text-base md:text-lg leading-relaxed text-ink/85">
+          {{ v.excerpt }}
+        </p>
+      </div>
+    </section>
+  }
+
+  <!-- ============ TRANSCRIPT placeholder ============ -->
+  @if (v.transcript) {
+    <section class="container-narrow pb-12">
+      <div class="max-w-3xl">
+        <h2 class="font-display text-2xl text-brown-deep mb-4">Lời giảng</h2>
+        <p class="text-muted italic font-display">
+          {{ '{{TODO: render Portable Text khi có transcript thật từ Sanity.}}' }}
+        </p>
+      </div>
+    </section>
+  }
+
+  <!-- ============ REFERENCES ============ -->
+  @if (v.references?.length) {
+    <section class="container-narrow pb-12">
+      <div class="max-w-3xl">
+        <h2 class="font-display text-2xl text-brown-deep mb-4">Tham chiếu</h2>
+        <ul class="space-y-2 text-base text-ink/85">
+          @for (ref of v.references; track ref) {
+            <li class="flex gap-2">
+              <i class="pi pi-bookmark mt-1 text-brass/70 shrink-0"></i>
+              <span>{{ ref }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </section>
+  }
+
+  <!-- ============ RELATED ============ -->
+  @if (related().length) {
+    <section class="bg-cream-warm/40 py-16 md:py-20 mt-8">
+      <div class="container-narrow">
+        <div class="text-center mb-10">
+          <span class="eyebrow">Xem thêm</span>
+          <h2 class="mt-4 font-display text-3xl md:text-4xl text-brown-deep">
+            Pháp thoại <em class="italic text-brass">liên quan</em>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          @for (r of related(); track r._id) {
+            <a
+              [routerLink]="['/phap-thoai', r.slug.current]"
+              class="group block rounded-2xl overflow-hidden border border-line bg-cream hover:-translate-y-1 hover:shadow-soft transition-all"
+            >
+              <div class="relative aspect-video bg-gradient-to-br from-brass-soft via-brass to-brown-deep overflow-hidden">
+                @if (videoThumb(r); as thumb) {
+                  <img [src]="thumb" [alt]="r.title" class="w-full h-full object-cover" loading="lazy" />
+                } @else {
+                  <div class="absolute inset-0 grid place-items-center text-cream/45">
+                    <svg viewBox="0 0 80 80" class="w-12 h-12">
+                      <circle cx="40" cy="40" r="38" fill="none" stroke="currentColor" stroke-width="1.5" />
+                      <path d="M32 26 L56 40 L32 54 Z" fill="currentColor" />
+                    </svg>
+                  </div>
+                }
+                @if (formatDuration(r.durationSec); as dur) {
+                  <span class="absolute bottom-2 right-2 px-2 py-0.5 text-[11px] font-medium bg-brown-darker/85 text-cream rounded">
+                    {{ dur }}
+                  </span>
+                }
+              </div>
+              <div class="p-5">
+                <h3 class="font-display text-lg text-brown-deep leading-snug line-clamp-2">
+                  {{ r.title }}
+                </h3>
+                @if (r.speaker) {
+                  <p class="mt-2 italic font-display text-sm text-brass">{{ r.speaker }}</p>
+                }
+              </div>
+            </a>
+          }
+        </div>
+      </div>
+    </section>
+  }
+} @else if (loading()) {
+  <!-- ============ LOADING SKELETON ============ -->
+  <section class="container-narrow py-20">
+    <div class="max-w-3xl">
+      <div class="h-4 w-32 bg-cream-warm rounded mb-6 animate-pulse"></div>
+      <div class="h-12 w-3/4 bg-cream-warm rounded mb-4 animate-pulse"></div>
+      <div class="h-4 w-1/2 bg-cream-warm rounded mb-10 animate-pulse"></div>
+      <div class="aspect-video w-full bg-cream-warm rounded-2xl animate-pulse"></div>
+    </div>
+  </section>
+} @else {
+  <!-- ============ NOT FOUND ============ -->
+  <section class="container-narrow py-24 text-center">
+    <i class="pi pi-search text-5xl text-muted/50 mb-4"></i>
+    <h1 class="font-display text-3xl md:text-4xl text-brown-deep">
+      Không tìm thấy pháp thoại
+    </h1>
+    <p class="mt-4 text-muted max-w-md mx-auto">
+      Đường dẫn không tồn tại hoặc bài giảng đã bị gỡ. Quý vị thử trở lại danh sách để tìm bài khác.
+    </p>
+    <a routerLink="/phap-thoai" class="btn-primary mt-8">
+      <i class="pi pi-arrow-left text-xs"></i>
+      Về danh sách
+    </a>
+  </section>
+}

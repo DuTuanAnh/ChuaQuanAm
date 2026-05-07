@@ -1,0 +1,145 @@
+/* History image placeholders — gradient panels with motif overlay. */
+.history-image {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  color: #3d2b1f;
+
+  &.tone-sunrise {
+    background: linear-gradient(140deg, #f8f1e0, #f2e6cc 45%, #d4a843 110%);
+    color: #7a5a45;
+  }
+  &.tone-midday {
+    background: linear-gradient(150deg, #e8c870, #b8860b 60%, #5a4030);
+    color: #fdf8ef;
+  }
+  &.tone-evening {
+    background: linear-gradient(160deg, #7a5a45, #3d2b1f 60%, #2c1a0e);
+    color: #d4a843;
+  }
+
+  .motif {
+    width: 60%;
+    height: 60%;
+  }
+  .motif svg {
+    width: 100%;
+    height: 100%;
+  }
+  .caption {
+    position: absolute;
+    bottom: 14px;
+    left: 18px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    opacity: 0.75;
+  }
+}
+
+/* Abbot portrait card. */
+.abbot-portrait {
+  background: radial-gradient(ellipse at 50% 35%, #f2e6cc, #d4a843 70%, #7a5a45);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+/* ============ Galleria — placeholder gallery items + thumbs ============ */
+:host ::ng-deep .hoat-galleria.p-galleria {
+  border: 1px solid #d9ccb6;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fdf8ef;
+
+  .p-galleria-item-wrapper {
+    background: transparent;
+  }
+  .p-galleria-thumbnail-wrapper {
+    background: rgba(244, 236, 216, 0.5);
+    padding: 0.5rem;
+  }
+  .p-galleria-item-nav {
+    color: #fdf8ef;
+    background: rgba(61, 43, 31, 0.55);
+    width: 2.75rem;
+    height: 2.75rem;
+
+    &:hover {
+      background: rgba(61, 43, 31, 0.85);
+      color: #fdf8ef;
+    }
+  }
+  .p-galleria-thumbnail-prev,
+  .p-galleria-thumbnail-next {
+    color: #5a4030;
+  }
+  .p-galleria-indicators .p-galleria-indicator > button {
+    background: rgba(122, 90, 69, 0.4);
+    width: 0.85rem;
+    height: 0.85rem;
+
+    &:hover {
+      background: #b8860b;
+    }
+  }
+  .p-galleria-indicator.p-highlight > button {
+    background: #3d2b1f;
+  }
+}
+
+/* Item placeholder card — large gradient with motif. */
+.gallery-item {
+  width: 100%;
+  height: 56vh;
+  max-height: 540px;
+  display: grid;
+  place-items: center;
+  position: relative;
+
+  &[data-tone='cream']  { background: linear-gradient(135deg, #fdf8ef, #f2e6cc 60%, #d4a843); color: #7a5a45; }
+  &[data-tone='saffron']{ background: linear-gradient(135deg, #f2e6cc, #b8860b 70%, #3d2b1f); color: #fdf8ef; }
+  &[data-tone='lotus']  { background: linear-gradient(135deg, #f2e6cc, #e0a4a8 70%, #7a2233); color: #fdf8ef; }
+  &[data-tone='jade']   { background: linear-gradient(135deg, #d8e0d2, #7a9a7e 70%, #3d4a3d); color: #fdf8ef; }
+  &[data-tone='brown']  { background: linear-gradient(135deg, #7a5a45, #3d2b1f 70%, #1f140c); color: #d4a843; }
+  &[data-tone='sunset'] { background: linear-gradient(135deg, #f8d8b8, #c97a4a 60%, #7a2233); color: #fdf8ef; }
+
+  .motif-svg {
+    width: 38%;
+    height: 38%;
+    opacity: 0.95;
+  }
+  .caption {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* Thumbnail card. */
+.gallery-thumb {
+  width: 130px;
+  height: 80px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 0 0.5rem;
+  line-height: 1.2;
+  cursor: pointer;
+
+  &[data-tone='cream']  { background: linear-gradient(135deg, #fdf8ef, #d4a843); color: #5a4030; }
+  &[data-tone='saffron']{ background: linear-gradient(135deg, #b8860b, #3d2b1f); color: #fdf8ef; }
+  &[data-tone='lotus']  { background: linear-gradient(135deg, #e0a4a8, #7a2233); color: #fdf8ef; }
+  &[data-tone='jade']   { background: linear-gradient(135deg, #7a9a7e, #3d4a3d); color: #fdf8ef; }
+  &[data-tone='brown']  { background: linear-gradient(135deg, #5a4030, #1f140c); color: #d4a843; }
+  &[data-tone='sunset'] { background: linear-gradient(135deg, #c97a4a, #7a2233); color: #fdf8ef; }
+}

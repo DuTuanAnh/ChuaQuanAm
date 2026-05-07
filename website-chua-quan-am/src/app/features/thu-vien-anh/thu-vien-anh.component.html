@@ -1,0 +1,139 @@
+<!-- ============ HEADER ============ -->
+<section class="container-narrow pt-16 md:pt-24 pb-10 text-center">
+  <span class="eyebrow">Khoảnh khắc tự viện</span>
+  <h1 class="mt-4 font-display font-medium text-4xl md:text-6xl text-brown-deep leading-tight">
+    Thư viện <em class="italic text-brass">ảnh</em>
+  </h1>
+  <p class="mt-5 max-w-2xl mx-auto text-base md:text-lg text-ink/75 leading-relaxed">
+    Hình ảnh kiến trúc, lễ hội, khoá tu, cảnh quan và sinh hoạt tại chùa —
+    được lưu giữ qua các năm.
+  </p>
+</section>
+
+<!-- ============ ALBUM CHIPS ============ -->
+<section class="container-narrow pb-8">
+  <div class="flex flex-wrap justify-center gap-2 md:gap-3">
+    @for (chip of chips; track chip.value) {
+      <button
+        type="button"
+        (click)="selectChip(chip.value)"
+        class="px-5 py-2 rounded-full text-sm font-medium border transition-all"
+        [class.bg-brown-deep]="selectedAlbum() === chip.value"
+        [class.text-cream]="selectedAlbum() === chip.value"
+        [class.border-brown-deep]="selectedAlbum() === chip.value"
+        [class.shadow-soft]="selectedAlbum() === chip.value"
+        [class.bg-cream]="selectedAlbum() !== chip.value"
+        [class.text-ink]="selectedAlbum() !== chip.value"
+        [class.border-line]="selectedAlbum() !== chip.value"
+        [class.hover:border-brass]="selectedAlbum() !== chip.value"
+        [class.hover:text-brown-deep]="selectedAlbum() !== chip.value"
+      >
+        {{ chip.label }}
+      </button>
+    }
+  </div>
+</section>
+
+<!-- ============ GRID / LOADING / EMPTY ============ -->
+<section class="container-narrow pb-24">
+  @if (loading()) {
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      @for (_ of skeletonSlots; track $index) {
+        <p-skeleton width="100%" height="100%" styleClass="aspect-square rounded-2xl"></p-skeleton>
+      }
+    </div>
+  } @else if (error()) {
+    <div class="text-center py-16">
+      <i class="pi pi-exclamation-circle text-3xl text-muted/60"></i>
+      <p class="mt-3 text-muted italic font-display">{{ error() }}</p>
+    </div>
+  } @else if (filteredPhotos().length === 0) {
+    <div class="text-center py-16 text-muted italic font-display">
+      Chưa có ảnh trong album này.
+    </div>
+  } @else {
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      @for (photo of filteredPhotos(); track photo._id; let idx = $index) {
+        <button
+          type="button"
+          (click)="openLightbox(idx)"
+          class="photo-tile group relative aspect-square overflow-hidden rounded-2xl border border-line"
+          [attr.data-album]="photo.album"
+          [attr.aria-label]="'Xem ảnh: ' + photo.title"
+          data-aos="zoom-in"
+          [attr.data-aos-delay]="(idx % 8) * 60"
+        >
+          @if (photo.image) {
+            <img
+              [src]="photo.image"
+              [alt]="photo.title"
+              loading="lazy"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          } @else {
+            <span class="placeholder-fill"></span>
+          }
+
+          <!-- Hover overlay with title -->
+          <span class="overlay">
+            <span class="overlay-title font-display">{{ photo.title }}</span>
+            @if (photo.dateTaken) {
+              <span class="overlay-date">{{ photo.dateTaken }}</span>
+            }
+          </span>
+
+          @if (photo.isFeature) {
+            <span class="feature-badge" aria-label="Ảnh nổi bật">
+              <i class="pi pi-star-fill"></i>
+            </span>
+          }
+        </button>
+      }
+    </div>
+  }
+</section>
+
+<!-- ============ FULLSCREEN LIGHTBOX ============ -->
+<p-galleria
+  [(visible)]="lightboxVisible"
+  [(activeIndex)]="lightboxIndex"
+  [value]="filteredPhotos()"
+  [responsiveOptions]="galleriaResponsive"
+  [numVisible]="7"
+  [circular]="true"
+  [fullScreen]="true"
+  [showItemNavigators]="true"
+  [showThumbnails]="true"
+  [showItemNavigatorsOnHover]="false"
+  [containerStyle]="{ 'max-width': '90vw' }"
+  styleClass="thu-vien-galleria"
+>
+  <ng-template pTemplate="item" let-item>
+    <div class="lightbox-item">
+      @if (item.image) {
+        <img [src]="item.image" [alt]="item.title" />
+      } @else {
+        <div class="lightbox-placeholder" [attr.data-album]="item.album"></div>
+      }
+      <div class="lightbox-caption">
+        <h3 class="font-display">{{ item.title }}</h3>
+        @if (item.description) {
+          <p>{{ item.description }}</p>
+        }
+        @if (item.dateTaken) {
+          <p class="lightbox-date">{{ item.dateTaken }}</p>
+        }
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="thumbnail" let-item>
+    <div class="lightbox-thumb" [attr.data-album]="item.album">
+      @if (item.image) {
+        <img [src]="item.image" [alt]="item.title" />
+      } @else {
+        <span class="lightbox-thumb-text font-display italic">{{ item.title }}</span>
+      }
+    </div>
+  </ng-template>
+</p-galleria>

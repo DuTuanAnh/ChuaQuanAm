@@ -1,0 +1,201 @@
+<!-- ============ HEADER ============ -->
+<section class="container-narrow pt-16 md:pt-24 pb-10 text-center">
+  <span class="eyebrow">Pháp âm &amp; kinh điển</span>
+  <h1 class="mt-4 font-display font-medium text-4xl md:text-6xl text-brown-deep leading-tight">
+    Kho tàng <em class="italic text-brass">chánh pháp</em>
+  </h1>
+  <p class="mt-5 max-w-2xl mx-auto text-base md:text-lg text-ink/75 leading-relaxed">
+    Tuyển tập bài giảng pháp thoại Bắc Tông được biên soạn cho Phật tử
+    cùng học hỏi và quán chiếu.
+  </p>
+</section>
+
+<!-- ============ SEARCH + FILTERS ============ -->
+<section class="container-narrow pb-8">
+  <div class="rounded-2xl border border-line bg-cream-warm/40 p-5 md:p-7 grid gap-4 md:grid-cols-12 md:items-end" data-aos="fade-down">
+    <!-- Search input -->
+    <div class="md:col-span-5">
+      <label class="block text-xs font-medium uppercase tracking-wider text-muted mb-2">
+        Tìm kiếm
+      </label>
+      <div class="relative">
+        <i class="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input
+          type="text"
+          [formControl]="searchControl"
+          placeholder="Tìm theo tên bài giảng…"
+          class="w-full rounded-full border border-line bg-cream pl-11 pr-4 py-3 text-sm focus:outline-none focus:border-brass focus:ring-2 focus:ring-brass/20"
+        />
+      </div>
+    </div>
+
+    <!-- Speaker dropdown -->
+    <div class="md:col-span-3">
+      <label class="block text-xs font-medium uppercase tracking-wider text-muted mb-2">
+        Pháp sư
+      </label>
+      <p-dropdown
+        [options]="speakerOptions()"
+        [ngModel]="filters().speaker ?? null"
+        (onChange)="onSpeakerChange($event.value)"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Tất cả pháp sư"
+        styleClass="w-full"
+        [style]="{ width: '100%' }"
+      ></p-dropdown>
+    </div>
+
+    <!-- Topic dropdown -->
+    <div class="md:col-span-2">
+      <label class="block text-xs font-medium uppercase tracking-wider text-muted mb-2">
+        Chủ đề
+      </label>
+      <p-dropdown
+        [options]="topicOptions"
+        [ngModel]="filters().topic ?? null"
+        (onChange)="onTopicChange($event.value)"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Tất cả"
+        styleClass="w-full"
+        [style]="{ width: '100%' }"
+      ></p-dropdown>
+    </div>
+
+    <!-- Year dropdown -->
+    <div class="md:col-span-2">
+      <label class="block text-xs font-medium uppercase tracking-wider text-muted mb-2">
+        Năm
+      </label>
+      <p-dropdown
+        [options]="yearOptions()"
+        [ngModel]="filters().year ?? null"
+        (onChange)="onYearChange($event.value)"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Tất cả"
+        styleClass="w-full"
+        [style]="{ width: '100%' }"
+      ></p-dropdown>
+    </div>
+  </div>
+
+  <!-- Active filter chips + clear -->
+  <div class="flex flex-wrap items-center justify-between gap-3 mt-4 px-1">
+    <div class="text-sm text-muted">
+      @if (loading()) {
+        Đang tải…
+      } @else {
+        <strong class="text-brown-deep">{{ totalRecords() }}</strong>
+        bài giảng
+        @if (hasAnyFilter()) { phù hợp với bộ lọc }
+      }
+    </div>
+    @if (hasAnyFilter()) {
+      <button
+        type="button"
+        (click)="clearFilters()"
+        class="inline-flex items-center gap-2 text-sm text-brass hover:text-brown-deep transition-colors"
+      >
+        <i class="pi pi-times-circle"></i>
+        Xoá bộ lọc
+      </button>
+    }
+  </div>
+</section>
+
+<!-- ============ VIDEO GRID ============ -->
+<section class="container-narrow pb-12">
+  @if (totalRecords() === 0 && !loading()) {
+    <div class="text-center py-16 text-muted italic font-display">
+      Không tìm thấy bài giảng nào phù hợp. Thử mở rộng bộ lọc nhé.
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (video of pagedVideos(); track video._id; let idx = $index) {
+        <a
+          [routerLink]="['/phap-thoai', video.slug.current]"
+          class="group block rounded-2xl overflow-hidden border border-line bg-cream hover:-translate-y-1 hover:shadow-soft transition-all"
+          data-aos="fade-up"
+          [attr.data-aos-delay]="(idx % 6) * 80"
+        >
+          <!-- thumbnail with hover overlay -->
+          <div class="relative aspect-video bg-gradient-to-br from-brass-soft via-brass to-brown-deep overflow-hidden">
+            @if (videoThumb(video); as thumb) {
+              <img
+                [src]="thumb"
+                [alt]="video.title"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            } @else {
+              <div class="absolute inset-0 grid place-items-center text-cream/45">
+                <svg viewBox="0 0 80 80" class="w-16 h-16">
+                  <circle cx="40" cy="40" r="38" fill="none" stroke="currentColor" stroke-width="1.5" />
+                  <path d="M32 26 L56 40 L32 54 Z" fill="currentColor" />
+                </svg>
+              </div>
+            }
+
+            <!-- hover play overlay -->
+            <div class="absolute inset-0 bg-brown-darker/0 group-hover:bg-brown-darker/55 transition-colors duration-300 grid place-items-center">
+              <div class="grid place-items-center w-16 h-16 rounded-full bg-brass-bright/95 text-brown-deep opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300 shadow-deep">
+                <svg viewBox="0 0 24 24" class="w-6 h-6 ml-0.5" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+
+            @if (formatDuration(video.durationSec); as dur) {
+              <span class="absolute bottom-2 right-2 px-2 py-0.5 text-[11px] font-medium bg-brown-darker/85 text-cream rounded">
+                {{ dur }}
+              </span>
+            }
+          </div>
+
+          <!-- card body -->
+          <div class="p-5">
+            <h3 class="font-display text-lg text-brown-deep leading-snug line-clamp-2">
+              {{ video.title }}
+            </h3>
+            @if (video.speaker) {
+              <p class="mt-2 italic font-display text-sm text-brass">
+                {{ video.speaker }}
+              </p>
+            }
+            <div class="mt-3 flex items-center justify-between text-xs text-muted">
+              <span class="inline-flex items-center gap-1">
+                <i class="pi pi-calendar"></i>
+                {{ formatDate(video.publishedAt) }}
+              </span>
+              @if (video.tags?.length) {
+                <span class="inline-flex items-center gap-1">
+                  <i class="pi pi-tag"></i>
+                  {{ video.tags?.[0] }}
+                </span>
+              }
+            </div>
+          </div>
+        </a>
+      }
+    </div>
+  }
+</section>
+
+<!-- ============ PAGINATOR ============ -->
+@if (totalRecords() > ROWS_PER_PAGE) {
+  <section class="container-narrow pb-20">
+    <div class="flex justify-center">
+      <p-paginator
+        [rows]="ROWS_PER_PAGE"
+        [totalRecords]="totalRecords()"
+        [first]="firstIndex()"
+        (onPageChange)="onPage($event)"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Trang {currentPage} / {totalPages}"
+        styleClass="phap-thoai-paginator"
+      ></p-paginator>
+    </div>
+  </section>
+}

@@ -1,0 +1,118 @@
+import { Photo } from './photo.model';
+
+/**
+ * Demo photos — used while Sanity isn't configured (placeholder projectId).
+ * `image` is intentionally empty; the gallery component renders a tinted
+ * gradient placeholder per `album` so the page doesn't look broken before
+ * real photos are uploaded via Sanity Studio.
+ */
+export const DEMO_PHOTOS: Photo[] = [
+  {
+    _id: 'demo-photo-01',
+    title: 'Chánh điện lúc bình minh',
+    image: '',
+    album: 'kien-truc',
+    dateTaken: '2026-04-12',
+    description: 'Ánh sáng đầu ngày phủ lên mái cong và tượng Bồ Tát.',
+    isFeature: true,
+  },
+  {
+    _id: 'demo-photo-02',
+    title: 'Cổng tam quan',
+    image: '',
+    album: 'kien-truc',
+    dateTaken: '2026-03-20',
+    description: 'Lối vào chùa với ba cánh cửa tượng trưng Tam giải thoát môn.',
+    isFeature: true,
+  },
+  {
+    _id: 'demo-photo-03',
+    title: 'Tôn tượng Đức Bồ Tát Quán Thế Âm',
+    image: '',
+    album: 'kien-truc',
+    dateTaken: '2026-02-15',
+    description: 'Kim thân Đức Quán Thế Âm tôn trí giữa sân trước.',
+    isFeature: true,
+  },
+  {
+    _id: 'demo-photo-04',
+    title: 'Hồng chung & trống bát-nhã',
+    image: '',
+    album: 'kien-truc',
+    dateTaken: '2026-01-30',
+    description: 'Pháp khí được thỉnh vào mỗi sớm chiều.',
+    isFeature: false,
+  },
+  {
+    _id: 'demo-photo-05',
+    title: 'Đại lễ Phật Đản 2025',
+    image: '',
+    album: 'le-hoi',
+    dateTaken: '2025-05-22',
+    description: 'Nghi thức tắm Phật trong đại lễ.',
+    isFeature: true,
+  },
+  {
+    _id: 'demo-photo-06',
+    title: 'Đại lễ Vu Lan báo hiếu',
+    image: '',
+    album: 'le-hoi',
+    dateTaken: '2025-08-28',
+    description: 'Lễ cài hoa hồng và tụng kinh Vu Lan.',
+    isFeature: false,
+  },
+  {
+    _id: 'demo-photo-07',
+    title: 'Vía Bồ Tát Quán Thế Âm',
+    image: '',
+    album: 'le-hoi',
+    dateTaken: '2025-07-13',
+    description: 'Đại chúng đồng niệm danh hiệu Đức Quán Thế Âm.',
+    isFeature: false,
+  },
+  {
+    _id: 'demo-photo-08',
+    title: 'Khoá tu một ngày an lạc',
+    image: '',
+    album: 'khoa-tu',
+    dateTaken: '2026-03-02',
+    description: 'Đại chúng hành thiền tại sân thiền sáng sớm.',
+    isFeature: true,
+  },
+  {
+    _id: 'demo-photo-09',
+    title: 'Khoá tu thanh niên Phật tử',
+    image: '',
+    album: 'khoa-tu',
+    dateTaken: '2025-09-12',
+    description: 'Phật tử trẻ chia sẻ kinh nghiệm tu tập.',
+    isFeature: false,
+  },
+  {
+    _id: 'demo-photo-10',
+    title: 'Hồ sen tịnh độ',
+    image: '',
+    album: 'thien-nhien',
+    dateTaken: '2026-04-01',
+    description: 'Hồ sen sau lễ hội — biểu pháp của tịnh tâm.',
+    isFeature: true,
+  },
+  {
+    _id: 'demo-photo-11',
+    title: 'Cây bồ đề trăm năm',
+    image: '',
+    album: 'thien-nhien',
+    dateTaken: '2026-02-28',
+    description: 'Bóng mát bồ đề trong sân chùa.',
+    isFeature: false,
+  },
+  {
+    _id: 'demo-photo-12',
+    title: 'Phóng sinh đầu tháng',
+    image: '',
+    album: 'su-kien',
+    dateTaken: '2026-04-03',
+    description: 'Đại chúng phát tâm phóng sinh tại bờ sông.',
+    isFeature: false,
+  },
+];

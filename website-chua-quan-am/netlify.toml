@@ -1,0 +1,8 @@
+[build]
+  command = "npx ng build"
+  publish = "dist/website-chua-quan-am/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

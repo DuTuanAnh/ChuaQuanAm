@@ -1,0 +1,547 @@
+<!-- ============ 1. HERO ============ -->
+<section class="relative h-[80vh] min-h-[560px] overflow-hidden">
+  <!-- Background illustration ({{TODO: thay bằng ảnh chùa thật khi có file)}} -->
+  <svg
+    #heroBg
+    class="absolute inset-0 w-full h-full will-change-transform"
+    preserveAspectRatio="xMidYMax slice"
+    viewBox="0 0 1600 900"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3D2B1F" />
+        <stop offset="0.45" stop-color="#7A5A45" />
+        <stop offset="0.75" stop-color="#B8860B" stop-opacity="0.9" />
+        <stop offset="1" stop-color="#D4A843" />
+      </linearGradient>
+      <linearGradient id="heroMtnFar" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#5A4030" stop-opacity="0.7" />
+        <stop offset="1" stop-color="#3D2B1F" />
+      </linearGradient>
+      <linearGradient id="heroMtnNear" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3D2B1F" />
+        <stop offset="1" stop-color="#2C1A0E" />
+      </linearGradient>
+      <radialGradient id="heroSun" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#FFE6A6" />
+        <stop offset="0.6" stop-color="#D4A843" stop-opacity="0.6" />
+        <stop offset="1" stop-color="#B8860B" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <rect width="1600" height="900" fill="url(#heroSky)" />
+    <!-- sun -->
+    <circle cx="1180" cy="380" r="200" fill="url(#heroSun)" />
+    <circle cx="1180" cy="380" r="80" fill="#FFE6A6" opacity="0.95" />
+    <!-- distant mist clouds -->
+    <ellipse cx="800" cy="440" rx="700" ry="40" fill="#FDF8EF" opacity="0.18" />
+    <ellipse cx="400" cy="490" rx="500" ry="30" fill="#FDF8EF" opacity="0.12" />
+    <!-- far mountains -->
+    <path
+      d="M0 560 Q140 470 280 540 Q440 460 600 530 Q780 470 940 540 Q1120 470 1280 530 Q1440 480 1600 530 L1600 900 L0 900 Z"
+      fill="url(#heroMtnFar)"
+    />
+    <!-- temple silhouette mid -->
+    <g transform="translate(800 600)" fill="#2C1A0E">
+      <path d="M-180 0 Q-100 -10 0 -8 Q100 -10 180 0 L180 70 L-180 70 Z" opacity="0.85" />
+      <g transform="translate(0 -10)">
+        <path d="M-110 0 L0 -90 L110 0 Z" />
+        <path d="M-130 -4 Q-110 -32 -90 -4 M90 -4 Q110 -32 130 -4" stroke="#1F140C" stroke-width="6" fill="none" />
+        <rect x="-70" y="0" width="140" height="80" />
+        <rect x="-12" y="30" width="24" height="50" fill="#0a0612" />
+      </g>
+    </g>
+    <!-- near mountains / foreground -->
+    <path
+      d="M0 700 Q140 640 280 690 Q440 620 600 680 Q780 630 940 690 Q1120 640 1280 690 Q1440 660 1600 690 L1600 900 L0 900 Z"
+      fill="url(#heroMtnNear)"
+    />
+  </svg>
+
+  <!-- Dark overlay for text readability -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: linear-gradient(180deg, rgba(44,26,14,0.55) 0%, rgba(44,26,14,0.25) 35%, rgba(44,26,14,0.65) 100%);"
+  ></div>
+
+  <!-- Brass sparkle decorations (subtle, on dark bg) -->
+  <svg class="absolute top-[12%] left-[6%] w-20 opacity-70 pointer-events-none" viewBox="0 0 80 80" aria-hidden="true">
+    <g fill="#D4A843">
+      <circle cx="6" cy="14" r="1.5"/><circle cx="22" cy="6" r="1.2"/>
+      <circle cx="36" cy="22" r="1.4"/><circle cx="14" cy="38" r="1.6"/>
+      <circle cx="48" cy="40" r="1"/><circle cx="30" cy="58" r="1.3"/>
+      <circle cx="60" cy="56" r="1"/><circle cx="48" cy="72" r="1.5"/>
+    </g>
+  </svg>
+  <svg class="absolute top-[8%] right-[8%] w-24 opacity-65 pointer-events-none" viewBox="0 0 100 80" aria-hidden="true">
+    <g fill="#E8C870">
+      <circle cx="6" cy="14" r="1.2"/><circle cx="28" cy="6" r="1.6"/>
+      <circle cx="48" cy="20" r="1"/><circle cx="72" cy="10" r="1.4"/>
+      <circle cx="20" cy="38" r="1.3"/><circle cx="50" cy="46" r="1"/>
+      <circle cx="80" cy="32" r="1.5"/><circle cx="60" cy="62" r="1"/>
+    </g>
+  </svg>
+  <svg class="absolute top-[18%] right-[2%] w-7 opacity-85 pointer-events-none" viewBox="0 0 28 28" aria-hidden="true">
+    <path d="M14 0 L16 12 L28 14 L16 16 L14 28 L12 16 L0 14 L12 12 Z" fill="#D4A843"/>
+  </svg>
+  <svg class="absolute bottom-[34%] left-[14%] w-5 opacity-70 pointer-events-none" viewBox="0 0 22 22" aria-hidden="true">
+    <path d="M11 0 L12.5 9.5 L22 11 L12.5 12.5 L11 22 L9.5 12.5 L0 11 L9.5 9.5 Z" fill="#E8C870"/>
+  </svg>
+
+  <!-- Content -->
+  <div
+    class="relative h-full container-narrow flex flex-col justify-center items-center text-center text-cream"
+    data-aos="fade-up"
+  >
+    <span class="eyebrow text-brass-bright/90">Tự viện Phật giáo Bắc Tông</span>
+    <h1
+      class="mt-6 font-display text-[60px] md:text-[88px] lg:text-[104px] leading-[0.95] tracking-tight"
+      style="color: #D4A843; text-shadow: 0 8px 30px rgba(0,0,0,0.4);"
+    >
+      Chùa Quan Âm
+    </h1>
+    <p class="mt-6 max-w-2xl font-display italic text-lg md:text-2xl text-cream/90">
+      Nương tựa Tam Bảo, an trú trong chánh niệm —
+      <br class="hidden md:block" />một chốn về cho người con Phật.
+    </p>
+    <div class="mt-10 flex flex-wrap gap-4 justify-center">
+      <a routerLink="/phap-thoai" class="btn-primary">
+        Xem pháp thoại
+        <i class="pi pi-arrow-right text-xs"></i>
+      </a>
+      <a
+        routerLink="/hoat-dong"
+        class="btn inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium border border-cream/40 text-cream hover:bg-cream/10 transition-all"
+      >
+        Lịch hoạt động
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TAGLINE STRIP ============ -->
+<section class="relative py-20 md:py-28 text-center overflow-hidden">
+  <span class="absolute top-10 left-1/2 -translate-x-1/2 w-px h-14 pointer-events-none"
+        style="background: linear-gradient(180deg, transparent, #B8860B 50%, transparent); opacity: 0.55;"></span>
+  <div class="container-narrow" data-aos="fade-up">
+    <h2 class="font-display italic text-3xl md:text-5xl text-brown-deep leading-tight">
+      Lắng nghe nội tâm,<br/>trở về với <em class="text-brass">chánh niệm</em>.
+    </h2>
+    <p class="mt-7 font-display tracking-[0.3em] text-sm text-muted">
+      LẮNG &nbsp;•&nbsp; QUÁN &nbsp;•&nbsp; TỈNH
+    </p>
+  </div>
+</section>
+
+<!-- ============ 2. INTRO (asymmetric: text-heavy left, framed illustration right) ============ -->
+<section class="container-narrow pb-20 md:pb-28 grid md:grid-cols-12 gap-14 items-start">
+  <!-- Text col first (md:col-span-7) -->
+  <div class="md:col-span-7 md:order-1 md:pt-10" data-aos="fade-left">
+    <span class="eyebrow">Đôi nét về chùa</span>
+    <h2 class="mt-4 font-display font-medium text-[36px] md:text-[56px] leading-[1.06] text-brown-deep">
+      Một mái chùa Bắc Tông,<br />
+      gìn giữ <em class="italic text-brass">hồn cốt thiền môn</em>.
+    </h2>
+    <p class="mt-6 text-base md:text-lg leading-relaxed text-ink/80 max-w-xl">
+      Chùa Quan Âm là tự viện Phật giáo Bắc Tông tại Mỹ Đông, Đông Hải, Ninh Thuận —
+      nơi tôn trí kim thân Đức Bồ Tát Quán Thế Âm, lưu giữ kinh điển Đại thừa,
+      và đồng hành cùng Phật tử trên hành trình tu tập.
+    </p>
+    <p class="mt-3 italic font-display text-brass">
+      Mở cả ngày — đón Phật tử và khách thập phương.
+    </p>
+    <a routerLink="/gioi-thieu" class="btn-primary mt-8">
+      Xem thêm
+      <i class="pi pi-arrow-right text-xs"></i>
+    </a>
+  </div>
+
+  <!-- Illustration col (md:col-span-5) — slight tilt + floating quote pin -->
+  <div class="md:col-span-5 md:order-2 relative" data-aos="fade-right">
+    <div class="relative w-full max-w-[420px] h-[440px] mx-auto md:ml-auto"
+         style="transform: rotate(-1.2deg);"
+         aria-hidden="true">
+      <div
+        class="absolute -inset-[8%] rounded-full"
+        style="background: radial-gradient(circle at 50% 50%,
+          rgba(255,220,168,0.0) 0%,
+          rgba(232,200,112,0.32) 38%,
+          rgba(184,134,11,0.28) 60%,
+          rgba(122,90,69,0.16) 80%,
+          transparent 92%); filter: blur(1px);"
+      ></div>
+      <div class="absolute inset-0 rounded-full border border-brass/30"></div>
+      <div class="absolute inset-[18%] rounded-full border border-brown-deep/15 border-dashed"></div>
+
+      <div class="absolute inset-0 grid place-items-center">
+      <svg viewBox="0 0 320 320" class="w-[88%] drop-shadow-[0_30px_50px_rgba(61,43,31,0.4)]">
+        <defs>
+          <linearGradient id="introPetalA" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFF5E3" />
+            <stop offset="0.5" stop-color="#E8C870" />
+            <stop offset="1" stop-color="#B8860B" />
+          </linearGradient>
+          <linearGradient id="introPetalB" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#F2E6CC" />
+            <stop offset="0.5" stop-color="#B8860B" />
+            <stop offset="1" stop-color="#3D2B1F" />
+          </linearGradient>
+          <radialGradient id="introCore" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#FFF5CC" />
+            <stop offset="0.6" stop-color="#D4A843" />
+            <stop offset="1" stop-color="#3D2B1F" />
+          </radialGradient>
+        </defs>
+        <g transform="translate(160 168)">
+          <g>
+            <ellipse cx="0" cy="-100" rx="38" ry="92" fill="url(#introPetalA)" stroke="#3D2B1F" stroke-width="1.2" stroke-opacity="0.55" />
+            <ellipse cx="0" cy="-100" rx="38" ry="92" fill="url(#introPetalA)" stroke="#3D2B1F" stroke-width="1.2" stroke-opacity="0.55" transform="rotate(45)" />
+            <ellipse cx="0" cy="-100" rx="38" ry="92" fill="url(#introPetalA)" stroke="#3D2B1F" stroke-width="1.2" stroke-opacity="0.55" transform="rotate(-45)" />
+            <ellipse cx="0" cy="-100" rx="38" ry="92" fill="url(#introPetalA)" stroke="#3D2B1F" stroke-width="1.2" stroke-opacity="0.55" transform="rotate(90)" />
+            <ellipse cx="0" cy="-100" rx="38" ry="92" fill="url(#introPetalA)" stroke="#3D2B1F" stroke-width="1.2" stroke-opacity="0.55" transform="rotate(-90)" />
+            <ellipse cx="0" cy="-100" rx="38" ry="92" fill="url(#introPetalA)" stroke="#3D2B1F" stroke-width="1.2" stroke-opacity="0.55" transform="rotate(135)" />
+            <ellipse cx="0" cy="-100" rx="38" ry="92" fill="url(#introPetalA)" stroke="#3D2B1F" stroke-width="1.2" stroke-opacity="0.55" transform="rotate(-135)" />
+          </g>
+          <g>
+            <ellipse cx="0" cy="-72" rx="26" ry="68" fill="url(#introPetalB)" stroke="#1F140C" stroke-width="1.2" stroke-opacity="0.7" />
+            <ellipse cx="0" cy="-72" rx="26" ry="68" fill="url(#introPetalB)" stroke="#1F140C" stroke-width="1.2" stroke-opacity="0.7" transform="rotate(60)" />
+            <ellipse cx="0" cy="-72" rx="26" ry="68" fill="url(#introPetalB)" stroke="#1F140C" stroke-width="1.2" stroke-opacity="0.7" transform="rotate(-60)" />
+            <ellipse cx="0" cy="-72" rx="26" ry="68" fill="url(#introPetalB)" stroke="#1F140C" stroke-width="1.2" stroke-opacity="0.7" transform="rotate(120)" />
+            <ellipse cx="0" cy="-72" rx="26" ry="68" fill="url(#introPetalB)" stroke="#1F140C" stroke-width="1.2" stroke-opacity="0.7" transform="rotate(-120)" />
+          </g>
+          <circle r="26" fill="url(#introCore)" />
+          <circle r="14" fill="#5A4030" />
+          <circle r="6" fill="#1F140C" />
+        </g>
+      </svg>
+      </div>
+    </div>
+
+    <!-- Floating quote pin overlapping bottom-left of illustration -->
+    <div
+      class="absolute bottom-[-20px] left-[-10px] md:left-[-30px] max-w-[240px] p-4 rounded-2xl bg-cream border border-line shadow-soft"
+      style="transform: rotate(2.5deg);"
+    >
+      <p class="font-display italic text-brown-deep text-[15px] leading-snug">
+        "Chuông chùa vọng giữa lòng phố,<br/>nhắc người con Phật giữ tâm an."
+      </p>
+      <p class="mt-2 font-display italic text-xs text-brass">— Lời tự sự của chùa</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. EVENTS ============ -->
+<section class="bg-cream-warm/40 py-20 md:py-28">
+  <div class="container-narrow">
+    <div class="text-center mb-14">
+      <span class="eyebrow">Lịch hoạt động</span>
+      <h2 class="mt-4 font-display font-medium text-[36px] md:text-[52px] leading-tight text-brown-deep">
+        Sự kiện <em class="italic text-brass">sắp tới</em>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      @for (event of displayEvents(); track event._id; let idx = $index) {
+        <a
+          routerLink="/hoat-dong"
+          class="group block rounded-2xl border border-line bg-cream p-7 hover:-translate-y-1 hover:shadow-soft transition-all"
+          data-aos="fade-up"
+          [attr.data-aos-delay]="idx * 150"
+        >
+          <div class="flex items-start justify-between gap-3 pb-4 border-b border-line/60">
+            <div class="flex items-baseline gap-3">
+              <span class="font-display text-[44px] leading-none text-brown-deep">
+                {{ eventDay(event.startsAt) }}
+              </span>
+              <span class="font-display italic text-brass">
+                {{ eventMonth(event.startsAt) }}
+              </span>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-cream-warm text-brown-deep text-[11px] uppercase tracking-wider font-medium shrink-0">
+              {{ eventTypeLabel(event.kind) }}
+            </span>
+          </div>
+          <h3 class="mt-5 font-display text-xl text-brown-deep leading-snug">
+            {{ event.title }}
+          </h3>
+          @if (event.lunarDate) {
+            <p class="mt-2 italic font-display text-sm text-brass">{{ event.lunarDate }}</p>
+          }
+          @if (event.location) {
+            <p class="mt-3 flex items-center gap-2 text-sm text-muted">
+              <i class="pi pi-map-marker text-brass/70"></i>
+              <span>{{ event.location }}</span>
+            </p>
+          }
+          <span class="mt-5 inline-flex items-center gap-2 font-display italic text-brass group-hover:gap-3 transition-all">
+            Chi tiết
+            <i class="pi pi-arrow-right text-xs"></i>
+          </span>
+        </a>
+      }
+    </div>
+
+    <div class="text-center mt-12">
+      <a
+        routerLink="/hoat-dong"
+        class="btn inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium border border-brown-deep text-brown-deep hover:bg-brown-deep hover:text-cream"
+      >
+        Xem tất cả
+        <i class="pi pi-arrow-right text-xs"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. PHOTOS (featured) ============ -->
+<section class="container-narrow py-20 md:py-28">
+  <div class="text-center mb-14">
+    <span class="eyebrow">Khoảnh khắc tự viện</span>
+    <h2 class="mt-4 font-display font-medium text-[36px] md:text-[52px] leading-tight text-brown-deep">
+      Hình ảnh <em class="italic text-brass">chùa</em>
+    </h2>
+  </div>
+
+  @if (featuredPhotos().length > 0) {
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+      @for (photo of featuredPhotos(); track photo._id; let idx = $index) {
+        <button
+          type="button"
+          (click)="openLightbox(idx)"
+          class="featured-photo group relative aspect-square overflow-hidden rounded-2xl border border-line"
+          [attr.data-album]="photo.album"
+          [attr.aria-label]="'Xem ảnh: ' + photo.title"
+          data-aos="zoom-in"
+          [attr.data-aos-delay]="idx * 80"
+        >
+          @if (photo.image) {
+            <img
+              [src]="photo.image"
+              [alt]="photo.title"
+              loading="lazy"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          } @else {
+            <span class="placeholder-fill"></span>
+          }
+
+          <span class="overlay">
+            <span class="zoom-icon">
+              <i class="pi pi-search-plus"></i>
+            </span>
+            <span class="overlay-title font-display italic">{{ photo.title }}</span>
+          </span>
+        </button>
+      }
+    </div>
+  }
+
+  <div class="text-center mt-12">
+    <a
+      routerLink="/thu-vien-anh"
+      class="btn inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium border border-brown-deep text-brown-deep hover:bg-brown-deep hover:text-cream"
+    >
+      Xem thư viện ảnh
+      <i class="pi pi-arrow-right text-xs"></i>
+    </a>
+  </div>
+</section>
+
+<!-- Lightbox (fullscreen Galleria) — shared with the Photos section above. -->
+<p-galleria
+  [(visible)]="lightboxVisible"
+  [(activeIndex)]="lightboxIndex"
+  [value]="featuredPhotos()"
+  [numVisible]="6"
+  [circular]="true"
+  [fullScreen]="true"
+  [showItemNavigators]="true"
+  [showThumbnails]="true"
+  [containerStyle]="{ 'max-width': '90vw' }"
+  styleClass="home-photo-galleria"
+>
+  <ng-template pTemplate="item" let-item>
+    <div class="lb-item">
+      @if (item.image) {
+        <img [src]="item.image" [alt]="item.title" />
+      } @else {
+        <div class="lb-placeholder" [attr.data-album]="item.album"></div>
+      }
+      <div class="lb-caption">
+        <h3 class="font-display">{{ item.title }}</h3>
+        @if (item.description) {
+          <p>{{ item.description }}</p>
+        }
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="thumbnail" let-item>
+    <div class="lb-thumb" [attr.data-album]="item.album">
+      @if (item.image) {
+        <img [src]="item.image" [alt]="item.title" />
+      } @else {
+        <span class="font-display italic">{{ item.title }}</span>
+      }
+    </div>
+  </ng-template>
+</p-galleria>
+
+<!-- ============ 5. VIDEOS ============ -->
+<section class="container-narrow py-20 md:py-28">
+  <div class="text-center mb-14">
+    <span class="eyebrow">Pháp âm</span>
+    <h2 class="mt-4 font-display font-medium text-[36px] md:text-[52px] leading-tight text-brown-deep">
+      Pháp thoại <em class="italic text-brass">mới nhất</em>
+    </h2>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    @for (video of displayVideos(); track video._id; let idx = $index) {
+      <a
+        routerLink="/phap-thoai"
+        class="group block rounded-2xl overflow-hidden border border-line bg-cream hover:-translate-y-1 hover:shadow-soft transition-all"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="idx * 150"
+      >
+        <div class="relative aspect-video bg-gradient-to-br from-brass-soft via-brass to-brown-deep overflow-hidden">
+          @if (videoThumb(video); as thumb) {
+            <img [src]="thumb" [alt]="video.title" class="w-full h-full object-cover" loading="lazy" />
+          } @else {
+            <div class="absolute inset-0 grid place-items-center text-cream/40">
+              <svg viewBox="0 0 80 80" class="w-16 h-16">
+                <circle cx="40" cy="40" r="38" fill="none" stroke="currentColor" stroke-width="1.5" />
+                <path d="M32 26 L56 40 L32 54 Z" fill="currentColor" />
+              </svg>
+            </div>
+          }
+          @if (formatDuration(video.durationSec); as dur) {
+            <span class="absolute bottom-2 right-2 px-2 py-0.5 text-[11px] font-medium bg-brown-darker/85 text-cream rounded">
+              {{ dur }}
+            </span>
+          }
+        </div>
+        <div class="p-6">
+          <h3 class="font-display text-lg text-brown-deep leading-snug line-clamp-2">
+            {{ video.title }}
+          </h3>
+          @if (video.speaker) {
+            <p class="mt-2 italic font-display text-sm text-muted">
+              {{ video.speaker }}
+            </p>
+          }
+        </div>
+      </a>
+    }
+  </div>
+
+  <div class="text-center mt-12">
+    <a
+      routerLink="/phap-thoai"
+      class="btn inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium border border-brown-deep text-brown-deep hover:bg-brown-deep hover:text-cream"
+    >
+      Xem thư viện
+      <i class="pi pi-arrow-right text-xs"></i>
+    </a>
+  </div>
+</section>
+
+<!-- ============ 6. CTA PORTAL ============ -->
+<section
+  class="relative mx-6 mb-16 mt-8 py-24 md:py-32 rounded-[48px] overflow-hidden text-center"
+  style="background:
+    radial-gradient(50% 50% at 50% 90%, rgba(255, 200, 130, 0.28), transparent 70%),
+    linear-gradient(180deg, #1a1224 0%, #2a1a2e 55%, #4a2030 100%);
+    color: #f6ead2;"
+>
+  <!-- Star field -->
+  <svg class="absolute inset-0 w-full h-full opacity-70 pointer-events-none" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="#FFE6A6">
+      <circle cx="80" cy="60" r="1.4"/><circle cx="220" cy="120" r="1"/>
+      <circle cx="360" cy="40" r="1.6"/><circle cx="500" cy="160" r="1.2"/>
+      <circle cx="640" cy="80" r="1"/><circle cx="780" cy="40" r="1.4"/>
+      <circle cx="920" cy="140" r="1"/><circle cx="1060" cy="60" r="1.6"/>
+      <circle cx="1200" cy="180" r="1.2"/><circle cx="1340" cy="100" r="1"/>
+      <circle cx="180" cy="280" r="1"/><circle cx="380" cy="340" r="1.4"/>
+      <circle cx="640" cy="280" r="1"/><circle cx="980" cy="340" r="1.2"/>
+      <circle cx="1320" cy="300" r="1.4"/>
+      <circle cx="100" cy="500" r="1.2"/><circle cx="240" cy="600" r="1"/>
+      <circle cx="1380" cy="540" r="1.6"/><circle cx="1300" cy="700" r="1"/>
+      <circle cx="80" cy="780" r="1.4"/><circle cx="320" cy="820" r="1"/>
+      <circle cx="780" cy="800" r="1.2"/><circle cx="1180" cy="840" r="1"/>
+    </g>
+  </svg>
+
+  <!-- Light rays from gate -->
+  <svg class="absolute bottom-[60px] left-1/2 -translate-x-1/2 w-[600px] h-[500px] opacity-60 pointer-events-none" viewBox="0 0 600 500" aria-hidden="true">
+    <defs>
+      <linearGradient id="ctaRayG" x1="0.5" y1="1" x2="0.5" y2="0">
+        <stop offset="0" stop-color="#FFE6A6" stop-opacity="0.65"/>
+        <stop offset="1" stop-color="#FFE6A6" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <g transform="translate(300 480)">
+      <polygon points="-220,-460 220,-460 90,0 -90,0" fill="url(#ctaRayG)" opacity="0.6"/>
+      <polygon points="-160,-460 160,-460 60,0 -60,0" fill="url(#ctaRayG)" opacity="0.55"/>
+      <polygon points="-90,-460 90,-460 30,0 -30,0" fill="url(#ctaRayG)" opacity="0.7"/>
+    </g>
+  </svg>
+
+  <!-- Content -->
+  <div class="relative max-w-[760px] mx-auto px-8">
+    <span class="eyebrow" style="color: #EAB1B5;">Lời mời</span>
+    <h2 class="mt-4 font-display font-medium leading-[1.1] text-[40px] md:text-[64px]"
+        style="color: #F6EAD2;">
+      Hãy mở cửa lòng,<br/>bước vào
+      <em class="italic"
+          style="background: linear-gradient(120deg, #F5DEC5, #D4A843 50%, #EAB1B5);
+                 -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+        không gian tịnh
+      </em>.
+    </h2>
+    <p class="mt-7 max-w-[520px] mx-auto text-[17px]" style="color: rgba(243,232,210,0.78);">
+      Quý Phật tử và khách thập phương đều được chào đón. Mời quý vị về chùa
+      tham dự khoá lễ, đảnh lễ Tam Bảo, hoặc đơn giản tìm một khoảnh khắc tĩnh lặng.
+    </p>
+
+    <!-- Architectural gate (mái + cột + cửa vòm + figure) -->
+    <div class="relative mx-auto mt-14" style="width: 320px; height: 440px;">
+      <!-- Roof -->
+      <svg class="absolute -top-[34px] left-1/2 -translate-x-1/2" style="width: 380px;" viewBox="0 0 380 60" aria-hidden="true">
+        <path d="M10 50 Q10 30 50 30 L330 30 Q370 30 370 50 L380 60 L0 60 Z" fill="#3A1A2A" stroke="rgba(232, 175, 110, 0.4)" stroke-width="1"/>
+        <path d="M0 30 L190 0 L380 30 L370 35 L190 8 L10 35 Z" fill="#2A1018" stroke="rgba(232, 175, 110, 0.35)" stroke-width="1"/>
+        <rect x="184" y="0" width="12" height="14" fill="rgba(232,175,110,0.5)"/>
+      </svg>
+      <!-- Pillars -->
+      <span class="absolute top-[60px] bottom-0 -left-[34px] w-[28px] rounded-t border border-b-0"
+            style="background: linear-gradient(180deg, rgba(196,154,63,0.35), rgba(92,23,23,0.7));
+                   border-color: rgba(232, 175, 110, 0.35);"></span>
+      <span class="absolute top-[60px] bottom-0 -right-[34px] w-[28px] rounded-t border border-b-0"
+            style="background: linear-gradient(180deg, rgba(196,154,63,0.35), rgba(92,23,23,0.7));
+                   border-color: rgba(232, 175, 110, 0.35);"></span>
+      <!-- Door (glowing arch) -->
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2"
+           style="width: 240px; height: 380px;
+                  border-radius: 120px 120px 6px 6px;
+                  background: radial-gradient(ellipse at 50% 65%, rgba(255,238,180,0.95) 0%, rgba(245, 200, 130, 0.78) 32%, rgba(196, 110, 60, 0.55) 65%, rgba(64, 16, 28, 0.85) 100%);
+                  box-shadow: 0 0 140px rgba(255, 220, 150, 0.6), 0 0 260px rgba(255, 200, 130, 0.38), inset 0 0 60px rgba(255,236,180,0.5);">
+      </div>
+      <!-- Figure inside door -->
+      <span class="absolute bottom-[18px] left-1/2 -translate-x-1/2"
+            style="width: 40px; height: 90px;
+                   background: linear-gradient(180deg, #0a0612 0%, #1a0e1a 100%);
+                   border-radius: 18px 18px 4px 4px;
+                   filter: drop-shadow(0 -10px 22px rgba(255, 220, 150, 0.55));">
+        <span class="absolute -top-4 left-1/2 -translate-x-1/2"
+              style="width: 18px; height: 22px; background: #0a0612; border-radius: 50% 50% 40% 40%;"></span>
+      </span>
+    </div>
+
+    <a routerLink="/lien-he"
+       class="inline-flex items-center gap-2 mt-12 rounded-full px-7 py-3 text-sm font-medium transition-all"
+       style="background: rgba(212, 168, 67, 0.15); color: #D4A843; border: 1px solid rgba(212, 168, 67, 0.4);">
+      Liên hệ &amp; đường đến chùa
+      <i class="pi pi-arrow-right text-xs"></i>
+    </a>
+  </div>
+</section>

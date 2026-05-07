@@ -1,0 +1,251 @@
+<!-- ============ HEADER ============ -->
+<section class="container-narrow pt-16 md:pt-24 pb-10 text-center">
+  <span class="eyebrow">Đôi nét về chùa</span>
+  <h1 class="mt-4 font-display font-medium text-4xl md:text-6xl text-brown-deep leading-tight">
+    Một mái chùa Bắc Tông,<br />
+    gìn giữ <em class="italic text-brass">hồn cốt thiền môn</em>
+  </h1>
+  <p class="mt-6 max-w-2xl mx-auto text-base md:text-lg text-ink/75 leading-relaxed">
+    Tự viện Phật giáo Bắc Tông tại Mỹ Đông, Đông Hải, Ninh Thuận —
+    nương tựa Tam Bảo, lưu giữ kinh điển Đại thừa, và đồng hành cùng
+    Phật tử trên hành trình tu tập.
+  </p>
+</section>
+
+<!-- ============ 1. LỊCH SỬ — alternating rows ============ -->
+<section class="container-narrow pb-12">
+  <div class="text-center mb-12">
+    <span class="eyebrow">Lịch sử</span>
+    <h2 class="mt-3 font-display font-medium text-3xl md:text-4xl text-brown-deep">
+      Hành trình của ngôi chùa
+    </h2>
+  </div>
+
+  <div class="space-y-16 md:space-y-24">
+    @for (block of historyBlocks; track block.eyebrow; let i = $index) {
+      <article
+        class="flex flex-col md:flex-row gap-8 md:gap-14 items-center"
+        [class.md:flex-row-reverse]="i % 2 === 1"
+      >
+        <!-- Image placeholder -->
+        <div class="md:w-1/2 w-full" data-aos="fade-left">
+          <div
+            class="history-image rounded-2xl overflow-hidden shadow-soft"
+            [class.tone-sunrise]="block.tone === 'sunrise'"
+            [class.tone-midday]="block.tone === 'midday'"
+            [class.tone-evening]="block.tone === 'evening'"
+          >
+            <div class="motif">
+              @switch (block.motif) {
+                @case ('mountain') {
+                  <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                    <path d="M0 100 L40 60 L80 90 L120 50 L160 85 L200 70 L200 120 L0 120 Z" fill="currentColor" opacity="0.5" />
+                    <path d="M0 110 L50 80 L110 100 L160 80 L200 95 L200 120 L0 120 Z" fill="currentColor" opacity="0.85" />
+                    <circle cx="150" cy="38" r="14" fill="currentColor" opacity="0.55" />
+                  </svg>
+                }
+                @case ('temple') {
+                  <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                    <g transform="translate(100 95)" fill="currentColor">
+                      <path d="M-60 0 L0 -55 L60 0 Z" opacity="0.85" />
+                      <rect x="-46" y="0" width="92" height="50" opacity="0.85" />
+                      <rect x="-10" y="20" width="20" height="30" opacity="1" />
+                      <path d="M-72 -4 Q-60 -22 -48 -4 M48 -4 Q60 -22 72 -4" stroke="currentColor" stroke-width="3" fill="none" opacity="0.85" />
+                    </g>
+                    <path d="M0 95 L200 95 L200 120 L0 120 Z" fill="currentColor" opacity="0.5" />
+                  </svg>
+                }
+                @case ('lotus') {
+                  <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                    <g transform="translate(100 70)" fill="currentColor">
+                      <ellipse cy="-30" rx="14" ry="36" opacity="0.85" />
+                      <ellipse cy="-30" rx="14" ry="36" opacity="0.75" transform="rotate(45)" />
+                      <ellipse cy="-30" rx="14" ry="36" opacity="0.75" transform="rotate(-45)" />
+                      <ellipse cy="-30" rx="14" ry="36" opacity="0.85" transform="rotate(90)" />
+                      <ellipse cy="-30" rx="14" ry="36" opacity="0.85" transform="rotate(-90)" />
+                      <circle r="10" opacity="1" />
+                    </g>
+                  </svg>
+                }
+              }
+            </div>
+            <span class="caption">{{ '{{TODO: ảnh thật chùa}}' }}</span>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="md:w-1/2 w-full" data-aos="fade-right">
+          <span class="eyebrow">{{ block.eyebrow }}</span>
+          <h3 class="mt-3 font-display font-medium text-2xl md:text-3xl text-brown-deep leading-tight">
+            {{ block.title }}
+          </h3>
+          <p class="mt-5 text-base leading-relaxed text-ink/80">
+            {{ block.body }}
+          </p>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+
+<!-- ============ 2. TRỤ TRÌ ============ -->
+<section class="bg-cream-warm/40 py-20 md:py-28">
+  <div class="container-narrow">
+    <div class="text-center mb-12">
+      <span class="eyebrow">Tăng đoàn</span>
+      <h2 class="mt-3 font-display font-medium text-3xl md:text-4xl text-brown-deep">
+        Trụ trì chùa
+      </h2>
+    </div>
+
+    <div class="max-w-3xl mx-auto rounded-2xl border border-line bg-cream p-8 md:p-12 grid md:grid-cols-3 gap-8 md:gap-12 items-center shadow-soft" data-aos="fade-up">
+      <!-- Generic monk silhouette — abstract, doesn't claim a specific person. -->
+      <div class="abbot-portrait rounded-2xl aspect-square">
+        <svg viewBox="0 0 120 120" class="w-full h-full" aria-hidden="true">
+          <defs>
+            <linearGradient id="robe" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#D4A843" />
+              <stop offset="1" stop-color="#7A5A45" />
+            </linearGradient>
+            <radialGradient id="halo" cx="0.5" cy="0.42" r="0.45">
+              <stop offset="0" stop-color="#FFE6A6" stop-opacity="0.85" />
+              <stop offset="1" stop-color="#FFE6A6" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <circle cx="60" cy="58" r="42" fill="url(#halo)" />
+          <ellipse cx="60" cy="48" rx="14" ry="16" fill="#3D2B1F" opacity="0.92" />
+          <path d="M30 78 Q60 64 90 78 L94 120 L26 120 Z" fill="url(#robe)" />
+          <path d="M44 78 Q60 70 76 78 L78 92 L42 92 Z" fill="#3D2B1F" opacity="0.5" />
+        </svg>
+      </div>
+
+      <div class="md:col-span-2">
+        <p class="font-display italic text-brass text-sm">Trụ trì</p>
+        <h3 class="mt-1 font-display text-2xl md:text-3xl text-brown-deep">
+          {{ '{{TODO: tôn xưng + pháp danh thầy trụ trì}}' }}
+        </h3>
+        <p class="mt-1 text-sm text-muted">
+          {{ '{{TODO: chức vụ trong Giáo hội — ví dụ: Hoà thượng / Thượng toạ / Đại đức}}' }}
+        </p>
+        <p class="mt-5 leading-relaxed text-ink/80">
+          {{ '{{TODO: tiểu sử ngắn — quê quán, năm xuất gia, các cương vị đã đảm nhiệm, hạnh nguyện hiện tại tại chùa Quan Âm. Chờ thầy duyệt nội dung.}}' }}
+        </p>
+
+        <p class="mt-5 italic font-display text-sm text-brass">
+          Nam mô Đại Bi Quán Thế Âm Bồ Tát.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. GALLERY ============ -->
+<section class="container-narrow py-20 md:py-28">
+  <div class="text-center mb-12">
+    <span class="eyebrow">Hình ảnh chùa</span>
+    <h2 class="mt-3 font-display font-medium text-3xl md:text-4xl text-brown-deep">
+      Khoảnh khắc <em class="italic text-brass">tự viện</em>
+    </h2>
+    <p class="mt-4 max-w-xl mx-auto text-sm text-muted italic">
+      {{ '{{TODO: thay placeholder bằng ảnh thật của chùa khi có file.}}' }}
+    </p>
+  </div>
+
+  <p-galleria
+    [value]="galleryItems"
+    [responsiveOptions]="galleriaResponsive"
+    [numVisible]="5"
+    [circular]="true"
+    [showItemNavigators]="true"
+    [showThumbnails]="true"
+    [containerStyle]="{ 'max-width': '900px', 'margin': '0 auto' }"
+    styleClass="hoat-galleria"
+  >
+    <ng-template pTemplate="item" let-item>
+      <div
+        class="gallery-item"
+        [attr.data-tone]="item.tone"
+        [attr.data-motif]="item.motif"
+      >
+        @switch (item.motif) {
+          @case ('lotus') {
+            <svg viewBox="0 0 200 200" class="motif-svg" aria-hidden="true">
+              <g transform="translate(100 110)" fill="currentColor">
+                <ellipse cy="-50" rx="22" ry="62" opacity="0.85" />
+                <ellipse cy="-50" rx="22" ry="62" opacity="0.85" transform="rotate(45)" />
+                <ellipse cy="-50" rx="22" ry="62" opacity="0.85" transform="rotate(-45)" />
+                <ellipse cy="-50" rx="22" ry="62" opacity="0.85" transform="rotate(90)" />
+                <ellipse cy="-50" rx="22" ry="62" opacity="0.85" transform="rotate(-90)" />
+                <circle r="18" />
+              </g>
+            </svg>
+          }
+          @case ('temple') {
+            <svg viewBox="0 0 200 200" class="motif-svg" aria-hidden="true">
+              <g transform="translate(100 150)" fill="currentColor">
+                <path d="M-80 0 L0 -75 L80 0 Z" opacity="0.85" />
+                <rect x="-60" y="0" width="120" height="60" opacity="0.85" />
+                <rect x="-12" y="22" width="24" height="38" opacity="1" />
+                <path d="M-95 -6 Q-80 -32 -65 -6 M65 -6 Q80 -32 95 -6" stroke="currentColor" stroke-width="4" fill="none" opacity="0.85" />
+              </g>
+            </svg>
+          }
+          @case ('bell') {
+            <svg viewBox="0 0 200 200" class="motif-svg" aria-hidden="true">
+              <g transform="translate(100 110)" fill="currentColor">
+                <path d="M-40 -50 Q-40 -80 0 -80 Q40 -80 40 -50 L46 30 L-46 30 Z" opacity="0.9" />
+                <ellipse cy="-78" rx="6" ry="4" />
+                <rect x="-50" y="30" width="100" height="6" />
+                <circle cy="-10" r="4" />
+              </g>
+            </svg>
+          }
+          @case ('cloud') {
+            <svg viewBox="0 0 200 200" class="motif-svg" aria-hidden="true">
+              <g transform="translate(100 100)" fill="currentColor" opacity="0.9">
+                <path d="M-70 10 Q-50 -20 -20 -10 Q0 -40 40 -20 Q70 -10 60 20 Q50 30 -60 30 Q-80 25 -70 10 Z" />
+              </g>
+            </svg>
+          }
+          @case ('tree') {
+            <svg viewBox="0 0 200 200" class="motif-svg" aria-hidden="true">
+              <g transform="translate(100 130)" fill="currentColor">
+                <circle cy="-60" r="40" opacity="0.85" />
+                <circle cx="-30" cy="-30" r="32" opacity="0.85" />
+                <circle cx="30" cy="-30" r="32" opacity="0.85" />
+                <rect x="-6" y="-10" width="12" height="60" opacity="1" />
+              </g>
+            </svg>
+          }
+          @case ('circle') {
+            <svg viewBox="0 0 200 200" class="motif-svg" aria-hidden="true">
+              <g transform="translate(100 100)" fill="none" stroke="currentColor" stroke-width="3" opacity="0.85">
+                <circle r="60" />
+                <circle r="42" stroke-dasharray="4 8" />
+                <circle r="22" />
+              </g>
+            </svg>
+          }
+        }
+        <span class="caption">{{ item.caption }}</span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="thumbnail" let-item>
+      <div class="gallery-thumb" [attr.data-tone]="item.tone">
+        <span class="font-display italic">{{ item.caption }}</span>
+      </div>
+    </ng-template>
+  </p-galleria>
+</section>
+
+<!-- ============ CTA → /lien-he ============ -->
+<section class="container-narrow pb-20 text-center">
+  <p class="font-display italic text-brown-deep text-lg md:text-xl">
+    Quý vị có thể đến chùa bất cứ lúc nào — mở cả ngày, đón Phật tử &amp; khách thập phương.
+  </p>
+  <a routerLink="/lien-he" class="btn-primary mt-6">
+    Liên hệ &amp; đường đến chùa
+    <i class="pi pi-arrow-right text-xs"></i>
+  </a>
+</section>

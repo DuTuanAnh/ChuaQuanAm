@@ -1,0 +1,8 @@
+/* Make YouTube IFrame fill the .player-frame container responsively. */
+:host ::ng-deep .player-frame youtube-player,
+:host ::ng-deep .player-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
