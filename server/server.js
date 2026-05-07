@@ -226,7 +226,7 @@ app.use((err, _req, res, _next) => {
 // ---------- Start ----------
 const PORT = parseInt(process.env.PORT, 10) || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   const sanityStatus = sanity.isConfigured()
     ? 'configured'
     : 'placeholder — set SANITY_PROJECT_ID in .env';
