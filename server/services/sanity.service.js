@@ -77,10 +77,10 @@ export async function getDharmaBySlug(slug) {
 export async function getEvents() {
   return client.fetch(`
     *[_type == "event"] | order(startDate asc) {
-      _id, title, type, startDate, endDate,
+      _id, title, slug, type, startDate, endDate,
       location,
       image { ..., asset->{ url } },
-      description, isRecurring, contact
+      description, isRecurring, recurringNote, contact
     }
   `);
 }
@@ -91,12 +91,31 @@ export async function getUpcomingEvents(limit) {
     `
     *[_type == "event" && startDate >= $today]
       | order(startDate asc) [0...$limit] {
-        _id, title, type, startDate,
+        _id, title, slug, type, startDate,
         location,
         image { ..., asset->{ url } }
       }
   `,
     { today, limit: parseInt(limit, 10) },
+  );
+}
+
+/**
+ * Fetch a single event by slug. Returns null if not found.
+ *
+ * Some legacy events may have been created before the slug field existed —
+ * Sanity will return them with `slug` undefined. The Studio now requires slug
+ * on new events, so editors need to add slugs to old ones via the Studio UI.
+ */
+export async function getEventBySlug(slug) {
+  return client.fetch(
+    `*[_type == "event" && slug.current == $slug][0] {
+      _id, title, slug, type, startDate, endDate,
+      location,
+      image { ..., asset->{ url } },
+      description, isRecurring, recurringNote, contact
+    }`,
+    { slug },
   );
 }
 

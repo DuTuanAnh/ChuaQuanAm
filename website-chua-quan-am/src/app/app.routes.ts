@@ -14,6 +14,14 @@ export const routes: Routes = [
     title: 'Hoạt động — Chùa Quan Âm',
   },
   {
+    path: 'hoat-dong/:slug',
+    loadComponent: () =>
+      import('./features/hoat-dong/hoat-dong-detail.component').then(
+        (m) => m.HoatDongDetailComponent,
+      ),
+    title: 'Hoạt động — Chùa Quan Âm',
+  },
+  {
     path: 'phap-thoai',
     loadComponent: () =>
       import('./features/phap-thoai/phap-thoai.component').then((m) => m.PhapThoaiComponent),

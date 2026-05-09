@@ -1,6 +1,10 @@
 import { Router } from 'express';
 
-import { getEvents, getUpcomingEvents } from '../services/sanity.service.js';
+import {
+  getEventBySlug,
+  getEvents,
+  getUpcomingEvents,
+} from '../services/sanity.service.js';
 
 const asyncHandler = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
@@ -120,6 +124,42 @@ router.get(
     }
     const events = await getUpcomingEvents(limit);
     res.json(events);
+  }),
+);
+
+/**
+ * @swagger
+ * /api/events/{slug}:
+ *   get:
+ *     summary: Chi tiết sự kiện theo slug
+ *     tags: [Events]
+ *     parameters:
+ *       - in: path
+ *         name: slug
+ *         required: true
+ *         schema: { type: string }
+ *         example: phat-dan-2569
+ *     responses:
+ *       200:
+ *         description: Chi tiết sự kiện
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/TempleEvent' }
+ *       404:
+ *         description: Không tìm thấy sự kiện
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
+router.get(
+  '/:slug',
+  asyncHandler(async (req, res) => {
+    const event = await getEventBySlug(req.params.slug);
+    if (!event) {
+      return res
+        .status(404)
+        .json({ error: 'Không tìm thấy sự kiện.', status: 404 });
+    }
+    res.json(event);
   }),
 );
 

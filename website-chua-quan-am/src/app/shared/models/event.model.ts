@@ -27,8 +27,14 @@ export interface TempleEvent {
 
   location?: string;
   hero?: SanityImage;
+  /** Direct CDN URL of the hero image — populated by SanityService mapper. */
+  heroUrl?: string;
   tags?: string[];
 
   /** True nếu là sự kiện thường niên (Vu Lan, Phật Đản...). */
   recurring?: boolean;
+  /** Free-text recurring schedule note ("Mỗi tháng vào Chủ nhật đầu tiên"). */
+  recurringNote?: string;
+  /** Người / số điện thoại / email phụ trách sự kiện. */
+  contact?: string;
 }

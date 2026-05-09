@@ -23,6 +23,17 @@ export default defineType({
       validation: (r) => r.required().min(2).max(160),
     }),
     defineField({
+      name: 'slug',
+      title: 'Đường dẫn (slug)',
+      type: 'slug',
+      description: 'Tự sinh từ tiêu đề. Bấm Generate để tạo. Dùng cho URL /hoat-dong/...',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      validation: (r) => r.required(),
+    }),
+    defineField({
       name: 'type',
       title: 'Loại sự kiện',
       type: 'string',

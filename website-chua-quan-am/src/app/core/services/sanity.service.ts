@@ -59,6 +59,7 @@ interface ApiDharma {
 interface ApiEvent {
   _id: string;
   title: string;
+  slug?: ApiSlug;
   type?: EventKind;
   startDate: string;
   endDate?: string;
@@ -66,6 +67,7 @@ interface ApiEvent {
   image?: ApiImage;
   description?: string;
   isRecurring?: boolean;
+  recurringNote?: string;
   contact?: string;
 }
 
@@ -149,13 +151,17 @@ const mapEvent = (e: ApiEvent): TempleEvent => ({
   _type: 'event',
   kind: (e.type ?? 'sinh-hoat') as EventKind,
   title: e.title,
-  // Backend event schema doesn't have slug — synthesize from title.
-  slug: { current: slugify(e.title) || e._id },
+  // Prefer real slug from Sanity; fall back to synthesized for legacy events.
+  slug: e.slug ?? { current: slugify(e.title) || e._id },
   excerpt: e.description,
+  body: e.description,
   startsAt: e.startDate,
   endsAt: e.endDate,
   location: e.location,
   recurring: e.isRecurring,
+  recurringNote: e.recurringNote,
+  contact: e.contact,
+  heroUrl: e.image?.asset?.url,
   hero: e.image
     ? { _type: 'image', asset: { _ref: e.image.asset?._ref ?? '', _type: 'reference' }, alt: e.image.alt }
     : undefined,
@@ -244,6 +250,12 @@ export class SanityService {
       sub.next(undefined);
       sub.complete();
     });
+  }
+
+  getEventBySlug(slug: string): Observable<TempleEvent | undefined> {
+    return this.http
+      .get<ApiEvent | null>(`${this.base}/events/${encodeURIComponent(slug)}`)
+      .pipe(map((row) => (row ? mapEvent(row) : undefined)));
   }
 
   // ---------- Photos ----------
