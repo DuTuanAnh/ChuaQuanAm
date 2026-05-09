@@ -27,23 +27,19 @@
     @if (e.heroUrl) {
       <div class="absolute inset-0 -z-10">
         <img [src]="e.heroUrl" [alt]="e.title" class="w-full h-full object-cover" />
-        <div class="absolute inset-0 bg-gradient-to-b from-brown-darker/60 via-brown-deep/55 to-cream"></div>
+        <!-- Stronger overlay so title stays readable against any photo. -->
+        <div class="absolute inset-0 bg-gradient-to-b from-brown-darker/85 via-brown-deep/75 to-cream"></div>
       </div>
-      <div class="container-narrow pt-28 md:pt-36 pb-16 md:pb-24 text-cream">
-        <a routerLink="/hoat-dong" class="inline-flex items-center gap-2 text-parchment/80 hover:text-cream transition-colors text-sm">
+      <div class="container-narrow pt-28 md:pt-36 pb-20 md:pb-28 text-cream">
+        <a routerLink="/hoat-dong" class="inline-flex items-center gap-2 text-parchment/90 hover:text-cream transition-colors text-sm">
           <i class="pi pi-arrow-left"></i> Tất cả hoạt động
         </a>
-        <span class="mt-6 inline-block px-3 py-1 rounded-full bg-cream/15 backdrop-blur-sm border border-cream/20 text-[11px] uppercase tracking-wider">
+        <span class="mt-6 inline-block px-3 py-1 rounded-full bg-cream/15 backdrop-blur-sm border border-cream/30 text-[11px] uppercase tracking-wider">
           {{ typeLabel(e.kind) }}
         </span>
-        <h1 class="mt-4 font-display font-medium text-3xl md:text-5xl leading-tight max-w-3xl">
+        <h1 class="mt-4 font-display font-medium text-3xl md:text-5xl leading-tight max-w-3xl drop-shadow-md">
           {{ e.title }}
         </h1>
-        @if (e.excerpt) {
-          <p class="mt-4 text-base md:text-lg text-parchment/90 max-w-2xl leading-relaxed">
-            {{ e.excerpt }}
-          </p>
-        }
       </div>
     } @else {
       <div class="container-narrow pt-16 md:pt-24 pb-12">
@@ -56,11 +52,6 @@
         <h1 class="mt-4 font-display font-medium text-3xl md:text-5xl text-brown-deep leading-tight max-w-3xl">
           {{ e.title }}
         </h1>
-        @if (e.excerpt) {
-          <p class="mt-4 text-base md:text-lg text-ink/75 max-w-2xl leading-relaxed">
-            {{ e.excerpt }}
-          </p>
-        }
       </div>
     }
   </section>
@@ -148,12 +139,10 @@
 
     <!-- Description -->
     <article class="lg:col-span-8">
+      <h2 class="font-display text-2xl text-brown-deep mb-4">Về sự kiện</h2>
       @if (e.body) {
-        <div class="prose prose-stone max-w-none">
-          <h2 class="font-display text-2xl text-brown-deep mb-4">Về sự kiện</h2>
-          <div class="text-ink/85 leading-relaxed whitespace-pre-line">{{ e.body }}</div>
-        </div>
-      } @else if (!e.excerpt) {
+        <div class="text-ink/85 leading-relaxed whitespace-pre-line">{{ e.body }}</div>
+      } @else {
         <p class="text-muted italic">
           Chưa có mô tả chi tiết. Vui lòng liên hệ chùa để biết thêm thông tin.
         </p>
