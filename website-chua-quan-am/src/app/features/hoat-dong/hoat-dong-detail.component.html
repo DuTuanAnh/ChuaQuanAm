@@ -27,17 +27,19 @@
     @if (e.heroUrl) {
       <div class="absolute inset-0 -z-10">
         <img [src]="e.heroUrl" [alt]="e.title" class="w-full h-full object-cover" />
-        <!-- Stronger overlay so title stays readable against any photo. -->
-        <div class="absolute inset-0 bg-gradient-to-b from-brown-darker/85 via-brown-deep/75 to-cream"></div>
+        <!-- Hold dark gradient through where the title sits, only fade at very bottom. -->
+        <div class="absolute inset-0 bg-gradient-to-b from-brown-darker/90 via-brown-darker/80 to-brown-deep/70"></div>
+        <!-- Smooth blend strip at the bottom edge into the page background. -->
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-cream"></div>
       </div>
-      <div class="container-narrow pt-28 md:pt-36 pb-20 md:pb-28 text-cream">
-        <a routerLink="/hoat-dong" class="inline-flex items-center gap-2 text-parchment/90 hover:text-cream transition-colors text-sm">
+      <div class="container-narrow pt-28 md:pt-36 pb-20 md:pb-28">
+        <a routerLink="/hoat-dong" class="inline-flex items-center gap-2 text-parchment hover:text-white transition-colors text-sm">
           <i class="pi pi-arrow-left"></i> Tất cả hoạt động
         </a>
-        <span class="mt-6 inline-block px-3 py-1 rounded-full bg-cream/15 backdrop-blur-sm border border-cream/30 text-[11px] uppercase tracking-wider">
+        <span class="mt-6 inline-block px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm border border-white/30 text-[11px] uppercase tracking-wider text-white">
           {{ typeLabel(e.kind) }}
         </span>
-        <h1 class="mt-4 font-display font-medium text-3xl md:text-5xl leading-tight max-w-3xl drop-shadow-md">
+        <h1 class="mt-4 font-display font-medium text-3xl md:text-5xl leading-tight max-w-3xl text-white hero-title-shadow">
           {{ e.title }}
         </h1>
       </div>

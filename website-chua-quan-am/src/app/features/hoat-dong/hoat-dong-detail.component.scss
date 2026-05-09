@@ -1,3 +1,12 @@
 :host {
   display: block;
 }
+
+/* Strong text-shadow stack so the white hero title stays crisp against any
+   photo — single Tailwind drop-shadow is too soft for large display type. */
+.hero-title-shadow {
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    0 4px 16px rgba(0, 0, 0, 0.45),
+    0 0 32px rgba(44, 26, 14, 0.35);
+}
