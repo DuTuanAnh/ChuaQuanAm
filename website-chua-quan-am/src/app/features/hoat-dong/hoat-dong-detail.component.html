@@ -26,7 +26,7 @@
   <section class="relative">
     @if (e.heroUrl) {
       <div class="absolute inset-0 -z-10">
-        <img [src]="e.heroUrl" [alt]="e.title" class="w-full h-full object-cover" />
+        <img [src]="e.heroUrl | sanityImg:'hero'" [alt]="e.title" class="w-full h-full object-cover" />
         <!-- Hold dark gradient through where the title sits, only fade at very bottom. -->
         <div class="absolute inset-0 bg-gradient-to-b from-brown-darker/90 via-brown-darker/80 to-brown-deep/70"></div>
         <!-- Smooth blend strip at the bottom edge into the page background. -->

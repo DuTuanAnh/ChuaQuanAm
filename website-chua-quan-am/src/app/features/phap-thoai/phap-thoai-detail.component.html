@@ -155,7 +155,7 @@
             >
               <div class="relative aspect-video bg-gradient-to-br from-brass-soft via-brass to-brown-deep overflow-hidden">
                 @if (videoThumb(r); as thumb) {
-                  <img [src]="thumb" [alt]="r.title" class="w-full h-full object-cover" loading="lazy" />
+                  <img [src]="thumb | sanityImg:'card'" [alt]="r.title" class="w-full h-full object-cover" loading="lazy" />
                 } @else {
                   <div class="absolute inset-0 grid place-items-center text-cream/45">
                     <svg viewBox="0 0 80 80" class="w-12 h-12">

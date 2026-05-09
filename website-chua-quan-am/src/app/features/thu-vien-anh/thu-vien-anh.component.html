@@ -111,7 +111,7 @@
   <ng-template pTemplate="item" let-item>
     <div class="lightbox-item">
       @if (item.image) {
-        <img [src]="item.image" [alt]="item.title" />
+        <img [src]="item.image | sanityImg:'lightbox'" [alt]="item.title" />
       } @else {
         <div class="lightbox-placeholder" [attr.data-album]="item.album"></div>
       }
@@ -130,7 +130,7 @@
   <ng-template pTemplate="thumbnail" let-item>
     <div class="lightbox-thumb" [attr.data-album]="item.album">
       @if (item.image) {
-        <img [src]="item.image" [alt]="item.title" />
+        <img [src]="item.image | sanityImg:200" [alt]="item.title" />
       } @else {
         <span class="lightbox-thumb-text font-display italic">{{ item.title }}</span>
       }

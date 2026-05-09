@@ -15,6 +15,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { debounceTime, distinctUntilChanged, take } from 'rxjs';
 
 import { Dharma } from '../../shared/models/dharma.model';
+import { SanityImgPipe } from '../../shared/pipes/sanity-img.pipe';
 import {
   DharmaActions,
   selectAvailableSpeakers,
@@ -52,6 +53,7 @@ const TOPICS = [
     ReactiveFormsModule,
     DropdownModule,
     PaginatorModule,
+    SanityImgPipe,
   ],
   templateUrl: './phap-thoai.component.html',
   styleUrl: './phap-thoai.component.scss',

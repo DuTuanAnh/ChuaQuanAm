@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { YouTubePlayer } from '@angular/youtube-player';
 
 import { Dharma } from '../../shared/models/dharma.model';
+import { SanityImgPipe } from '../../shared/pipes/sanity-img.pipe';
 import {
   DharmaActions,
   selectLoading,
@@ -18,7 +19,7 @@ type PlayerKind = 'youtube' | 'upload' | 'audio' | 'none';
 @Component({
   selector: 'app-phap-thoai-detail',
   standalone: true,
-  imports: [RouterLink, YouTubePlayer],
+  imports: [RouterLink, YouTubePlayer, SanityImgPipe],
   templateUrl: './phap-thoai-detail.component.html',
   styleUrl: './phap-thoai-detail.component.scss',
 })

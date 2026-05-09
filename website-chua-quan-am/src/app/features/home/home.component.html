@@ -316,7 +316,7 @@
         >
           @if (photo.image) {
             <img
-              [src]="photo.image"
+              [src]="photo.image | sanityImg:600"
               [alt]="photo.title"
               loading="lazy"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -363,7 +363,7 @@
   <ng-template pTemplate="item" let-item>
     <div class="lb-item">
       @if (item.image) {
-        <img [src]="item.image" [alt]="item.title" />
+        <img [src]="item.image | sanityImg:'lightbox'" [alt]="item.title" />
       } @else {
         <div class="lb-placeholder" [attr.data-album]="item.album"></div>
       }
@@ -379,7 +379,7 @@
   <ng-template pTemplate="thumbnail" let-item>
     <div class="lb-thumb" [attr.data-album]="item.album">
       @if (item.image) {
-        <img [src]="item.image" [alt]="item.title" />
+        <img [src]="item.image | sanityImg:200" [alt]="item.title" />
       } @else {
         <span class="font-display italic">{{ item.title }}</span>
       }
@@ -406,7 +406,7 @@
       >
         <div class="relative aspect-video bg-gradient-to-br from-brass-soft via-brass to-brown-deep overflow-hidden">
           @if (videoThumb(video); as thumb) {
-            <img [src]="thumb" [alt]="video.title" class="w-full h-full object-cover" loading="lazy" />
+            <img [src]="thumb | sanityImg:'card'" [alt]="video.title" class="w-full h-full object-cover" loading="lazy" />
           } @else {
             <div class="absolute inset-0 grid place-items-center text-cream/40">
               <svg viewBox="0 0 80 80" class="w-16 h-16">

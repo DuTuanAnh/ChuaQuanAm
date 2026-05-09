@@ -23,6 +23,7 @@ import { Dharma } from '../../shared/models/dharma.model';
 import { EventKind, TempleEvent } from '../../shared/models/event.model';
 import { Photo, PhotoAlbum } from '../../shared/models/photo.model';
 import { DEMO_PHOTOS } from '../../shared/models/photo.demo';
+import { SanityImgPipe } from '../../shared/pipes/sanity-img.pipe';
 import { DharmaActions, selectVideos } from '../phap-thoai/store';
 import { EventActions, selectUpcomingEvents } from '../hoat-dong/store';
 
@@ -49,7 +50,7 @@ const FEATURED_TARGET = 6;
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, GalleriaModule],
+  imports: [RouterLink, GalleriaModule, SanityImgPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

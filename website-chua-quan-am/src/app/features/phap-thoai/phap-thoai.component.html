@@ -124,7 +124,7 @@
           <div class="relative aspect-video bg-gradient-to-br from-brass-soft via-brass to-brown-deep overflow-hidden">
             @if (videoThumb(video); as thumb) {
               <img
-                [src]="thumb"
+                [src]="thumb | sanityImg:'card'"
                 [alt]="video.title"
                 class="w-full h-full object-cover"
                 loading="lazy"

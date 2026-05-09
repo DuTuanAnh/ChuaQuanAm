@@ -5,6 +5,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 
 import { SanityService } from '../../core/services/sanity.service';
 import { Photo, PhotoAlbum } from '../../shared/models/photo.model';
+import { SanityImgPipe } from '../../shared/pipes/sanity-img.pipe';
 
 type AlbumFilter = PhotoAlbum | 'all';
 
@@ -16,7 +17,7 @@ interface ChipOption {
 @Component({
   selector: 'app-thu-vien-anh',
   standalone: true,
-  imports: [GalleriaModule, SkeletonModule],
+  imports: [GalleriaModule, SkeletonModule, SanityImgPipe],
   templateUrl: './thu-vien-anh.component.html',
   styleUrl: './thu-vien-anh.component.scss',
 })

@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { SanityService } from '../../core/services/sanity.service';
 import { EventKind, TempleEvent } from '../../shared/models/event.model';
+import { SanityImgPipe } from '../../shared/pipes/sanity-img.pipe';
 import { EventActions, selectEvents, selectLoading } from './store';
 
 const TYPE_LABEL: Record<EventKind, string> = {
@@ -29,7 +30,7 @@ const pad = (n: number): string => n.toString().padStart(2, '0');
 @Component({
   selector: 'app-hoat-dong-detail',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, SanityImgPipe],
   templateUrl: './hoat-dong-detail.component.html',
   styleUrl: './hoat-dong-detail.component.scss',
 })
