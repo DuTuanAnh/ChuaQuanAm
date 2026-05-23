@@ -16,7 +16,9 @@ module.exports = {
         cream: '#FDF8EF',
         'cream-warm': '#F2E6CC',
         ink: '#1F140C',
-        muted: '#8B7B6A',
+        // Was #8B7B6A — too light for elderly readers (3.5:1 on cream, fails WCAG AA).
+        // Darkened to brown-mid tone for ~8.5:1 contrast while still visually "softer" than ink.
+        muted: '#5A4030',
         line: '#D9CCB6',
       },
       fontFamily: {

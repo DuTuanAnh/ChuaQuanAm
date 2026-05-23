@@ -7,10 +7,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Bumped from default 16px → 17px for elderly readers (audience is largely senior Phật tử). */
+    font-size: 17px;
   }
   body {
     @apply bg-cream text-ink font-sans antialiased;
     font-feature-settings: 'kern', 'liga';
+    line-height: 1.65;
   }
   h1, h2, h3, h4, h5 {
     @apply font-display text-brown-deep;
