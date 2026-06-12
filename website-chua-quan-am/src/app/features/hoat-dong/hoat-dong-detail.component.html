@@ -123,13 +123,22 @@
           }
         </ul>
 
-        <!-- Status pill -->
-        <div class="mt-5 pt-5 border-t border-line/70">
+        <!-- Status pill + register CTA -->
+        <div class="mt-5 pt-5 border-t border-line/70 space-y-3">
           @if (isUpcoming(e.startsAt)) {
             <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brass/15 text-brown-deep text-xs font-medium">
               <span class="inline-block w-2 h-2 rounded-full bg-brass animate-pulse"></span>
               Sắp diễn ra
             </span>
+            <!-- Smooth-scroll to the form. Form auto-hides if event has no
+                 maxAttendees set, so this anchor will just no-op in that case. -->
+            <a
+              href="#dang-ky"
+              class="block w-full text-center btn-primary py-3"
+            >
+              <i class="pi pi-user-plus mr-2"></i>
+              Đăng ký tham dự
+            </a>
           } @else {
             <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-line text-muted text-xs">
               Đã diễn ra
@@ -161,6 +170,14 @@
             tại địa chỉ Mỹ Đông, Đông Hải, Khánh Hoà.
           }
         </p>
+      </div>
+
+      <!-- Registration form (auto-hides if event has no maxAttendees set in Sanity) -->
+      <div class="mt-10">
+        <app-hoat-dong-detail-register
+          [eventSlug]="e.slug.current"
+          [isUpcoming]="isUpcoming(e.startsAt)"
+        />
       </div>
     </article>
   </section>

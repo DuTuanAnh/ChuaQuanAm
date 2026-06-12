@@ -69,6 +69,19 @@ export default defineType({
       rows: 4,
     }),
     defineField({
+      name: 'maxAttendees',
+      title: 'Mức trần đăng ký online',
+      type: 'number',
+      description:
+        'Số đăng ký TỐI ĐA cho phép qua web (không phải số dự kiến tham dự). ' +
+        'Nên cộng buffer 20-30% so với sức chứa thực tế của chùa để dự phòng ' +
+        'walk-in và no-show. ' +
+        'Ví dụ: sức chứa 300 chỗ ngồi → đặt 400 ở đây. ' +
+        'Để TRỐNG nếu sự kiện không cần đăng ký online (đại lễ Phật Đản, Vu Lan…) — ' +
+        'lúc đó form đăng ký tự ẩn.',
+      validation: (r) => r.min(1).max(5000),
+    }),
+    defineField({
       name: 'isRecurring',
       title: 'Sự kiện lặp lại',
       type: 'boolean',

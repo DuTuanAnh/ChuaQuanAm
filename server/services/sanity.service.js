@@ -1,12 +1,10 @@
 import { createClient } from '@sanity/client';
 
 /**
- * Sanity client — created once at module load using env values.
- * Project must have a real id + dataset (see server/.env).
- *
- * Security: never expose `token` to clients. This file runs server-side only.
+ * Read client — uses Sanity CDN, fast (cached at edge), Viewer-scope token.
+ * Suitable for GET endpoints (posts, dharma, events, photos, registration counts).
  */
-const client = createClient({
+const readClient = createClient({
   projectId: process.env.SANITY_PROJECT_ID,
   dataset: process.env.SANITY_DATASET,
   useCdn: true,
@@ -14,7 +12,24 @@ const client = createClient({
   token: process.env.SANITY_TOKEN || undefined,
 });
 
+/**
+ * Write client — bypasses CDN (writes must hit origin), requires Editor-scope
+ * token. Used ONLY for creating registrations. Token must NEVER reach the
+ * frontend — public submissions go through POST /api/registrations.
+ */
+const writeClient = createClient({
+  projectId: process.env.SANITY_PROJECT_ID,
+  dataset: process.env.SANITY_DATASET,
+  useCdn: false,
+  apiVersion: '2024-01-01',
+  token: process.env.SANITY_WRITE_TOKEN || undefined,
+});
+
+// Existing code below uses `client` for reads — keep alias for compat.
+const client = readClient;
+
 export const isConfigured = () => Boolean(process.env.SANITY_PROJECT_ID);
+export const isWriteConfigured = () => Boolean(process.env.SANITY_WRITE_TOKEN);
 
 // ---------- Posts ----------
 
@@ -157,4 +172,76 @@ export async function getPhotoById(id) {
     { id },
   );
   return item ?? null;
+}
+
+// ---------- Registrations (đăng ký khoá tu) ----------
+
+/**
+ * Fetch event + current registration count + capacity, used by
+ * GET /api/events/:slug/capacity. Lets the frontend decide whether to show
+ * the registration form, how many seats are left, or "đã đầy".
+ *
+ * Counts only registrations with status != 'cancelled' so cancelled people
+ * free up a seat. `peopleSum` sums numberOfPeople (a registration of 3 takes
+ * 3 seats), which is what chùa actually needs to plan cơm/chỗ ngồi.
+ */
+export async function getEventCapacity(slug) {
+  return readClient.fetch(
+    `*[_type == "event" && slug.current == $slug][0] {
+      "eventId": _id,
+      title,
+      startDate,
+      location,
+      "maxAttendees": coalesce(maxAttendees, 0),
+      "registrationsCount": count(*[_type == "registration" && event._ref == ^._id && status != "cancelled"]),
+      "peopleSum": math::sum(*[_type == "registration" && event._ref == ^._id && status != "cancelled"].numberOfPeople)
+    }`,
+    { slug },
+  );
+}
+
+/**
+ * Create a new registration document. Throws if SANITY_WRITE_TOKEN is missing.
+ *
+ * Caller (the route) is responsible for validation (required fields, phone
+ * format, numberOfPeople range, capacity check). This function trusts its
+ * inputs — never expose it to user input without sanitization upstream.
+ */
+export async function createRegistration({
+  eventId,
+  fullName,
+  phone,
+  email,
+  numberOfPeople,
+  note,
+}) {
+  if (!isWriteConfigured()) {
+    throw new Error(
+      'Tính năng đăng ký chưa sẵn sàng — máy chủ chưa cấu hình SANITY_WRITE_TOKEN.',
+    );
+  }
+  return writeClient.create({
+    _type: 'registration',
+    event: { _type: 'reference', _ref: eventId },
+    fullName,
+    phone,
+    email: email || undefined,
+    numberOfPeople,
+    note: note || undefined,
+    status: 'pending',
+    submittedAt: new Date().toISOString(),
+  });
+}
+
+/**
+ * List all registrations for one event (admin / CSV export).
+ * Sorted submittedAt asc so check-in order matches submission order.
+ */
+export async function getRegistrationsByEvent(eventId) {
+  return readClient.fetch(
+    `*[_type == "registration" && event._ref == $eventId] | order(submittedAt asc) {
+      _id, fullName, phone, email, numberOfPeople, note, status, submittedAt, adminNote
+    }`,
+    { eventId },
+  );
 }

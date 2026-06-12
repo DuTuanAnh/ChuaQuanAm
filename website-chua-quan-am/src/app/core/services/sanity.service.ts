@@ -71,6 +71,36 @@ interface ApiEvent {
   contact?: string;
 }
 
+/** Capacity status for an event — emitted by GET /api/registrations/capacity/:slug. */
+export interface EventCapacity {
+  eventId: string;
+  title: string;
+  startDate: string;
+  location?: string;
+  /** 0 means no online registration enabled. */
+  maxAttendees: number;
+  registrationsCount: number;
+  /** Sum of numberOfPeople across all non-cancelled registrations. */
+  peopleSum: number;
+}
+
+/** Form payload for POST /api/registrations. */
+export interface RegistrationPayload {
+  eventSlug: string;
+  fullName: string;
+  phone: string;
+  email?: string;
+  numberOfPeople: number;
+  note?: string;
+}
+
+/** Success response from POST /api/registrations. */
+export interface RegistrationResponse {
+  ok: true;
+  registrationId: string;
+  message: string;
+}
+
 interface ApiPhoto {
   _id: string;
   title: string;
@@ -256,6 +286,40 @@ export class SanityService {
     return this.http
       .get<ApiEvent | null>(`${this.base}/events/${encodeURIComponent(slug)}`)
       .pipe(map((row) => (row ? mapEvent(row) : undefined)));
+  }
+
+  // ---------- Registrations ----------
+
+  /**
+   * Get capacity / seats-left for an event, used by the registration form
+   * to decide what to render (open form / show "X chỗ còn lại" / "đã đầy").
+   * Returns null when the event has no `maxAttendees` set (no online reg).
+   */
+  getEventCapacity(slug: string): Observable<EventCapacity | null> {
+    return this.http
+      .get<EventCapacity>(
+        `${this.base}/registrations/capacity/${encodeURIComponent(slug)}`,
+      )
+      .pipe(
+        map((info) => {
+          if (!info?.eventId || !info.maxAttendees) return null;
+          return info;
+        }),
+      );
+  }
+
+  /**
+   * Submit a new registration. Backend handles validation + capacity check +
+   * Sanity write + (optional) email confirmation. Caller should display
+   * the returned `message` to the Phật tử on success.
+   */
+  createRegistration(
+    payload: RegistrationPayload,
+  ): Observable<RegistrationResponse> {
+    return this.http.post<RegistrationResponse>(
+      `${this.base}/registrations`,
+      payload,
+    );
   }
 
   // ---------- Photos ----------

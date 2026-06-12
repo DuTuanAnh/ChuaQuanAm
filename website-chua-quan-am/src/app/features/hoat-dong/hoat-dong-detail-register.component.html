@@ -1,0 +1,213 @@
+@if (capacityLoading()) {
+  <div class="rounded-2xl border border-line bg-cream-warm/30 p-6 text-center">
+    <p class="text-muted italic">Đang tải thông tin đăng ký…</p>
+  </div>
+} @else if (capacityError()) {
+  <div class="rounded-2xl border border-line bg-cream-warm/30 p-6">
+    <p class="text-muted">{{ capacityError() }}</p>
+  </div>
+} @else if (capacity()) {
+  <!-- Has online registration enabled -->
+  <section
+    id="dang-ky"
+    class="rounded-2xl border-2 border-brass/30 bg-cream p-6 md:p-8 shadow-soft scroll-mt-28"
+    [class.opacity-90]="!isUpcoming() || isFull()"
+  >
+    <!-- Header + capacity bar -->
+    <header class="flex flex-wrap items-baseline justify-between gap-3 mb-5">
+      <div>
+        <span class="eyebrow">Đăng ký tham dự</span>
+        <h2 class="mt-2 font-display text-2xl md:text-3xl text-brown-deep">
+          @if (!isUpcoming()) {
+            Khoá tu đã diễn ra
+          } @else if (isFull()) {
+            Đã đầy chỗ
+          } @else {
+            Còn {{ seatsLeft() }} chỗ trống
+          }
+        </h2>
+      </div>
+      <div class="text-right text-sm">
+        <div class="text-muted">Đã đăng ký</div>
+        <div class="font-display text-2xl text-brown-deep">
+          {{ capacity()?.peopleSum || 0 }}<span class="text-muted">/{{ capacity()?.maxAttendees }}</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Progress bar -->
+    <div class="w-full h-2 rounded-full bg-line/60 overflow-hidden mb-6">
+      <div
+        class="h-full transition-all"
+        [class.bg-brass]="progressPercent() < 80"
+        [class.bg-orange-500]="progressPercent() >= 80 && progressPercent() < 100"
+        [class.bg-red-500]="progressPercent() >= 100"
+        [style.width.%]="progressPercent()"
+      ></div>
+    </div>
+
+    @if (state() === 'success') {
+      <!-- Success state -->
+      <div class="rounded-xl bg-brass/10 border border-brass/30 p-5 text-center">
+        <i class="pi pi-check-circle text-3xl text-brass mb-3 block"></i>
+        <p class="font-display italic text-lg text-brown-deep mb-2">
+          Nam mô A Di Đà Phật
+        </p>
+        <p class="text-ink/90 leading-relaxed">{{ successMessage() }}</p>
+        <button
+          type="button"
+          (click)="resetSuccessState()"
+          class="mt-4 text-sm text-brass hover:text-brown-deep underline"
+        >
+          Đăng ký thêm người khác
+        </button>
+      </div>
+    } @else if (!isUpcoming()) {
+      <p class="text-muted italic">
+        Khoá tu này đã kết thúc. Quý vị có thể xem các khoá tu sắp tới ở
+        <a routerLink="/hoat-dong" class="text-brass hover:text-brown-deep underline">trang Hoạt động</a>.
+      </p>
+    } @else if (isFull()) {
+      <p class="text-muted italic">
+        Khoá tu này đã đủ số người. Xin quý Phật tử đăng ký các khoá tu tới
+        hoặc liên hệ chùa qua điện thoại để được hỗ trợ.
+      </p>
+    } @else {
+      <!-- The form -->
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="space-y-4">
+
+        <!-- Full name -->
+        <div>
+          <label for="fullName" class="block text-sm font-medium text-brown-deep mb-1.5">
+            Họ và tên <span class="text-red-600">*</span>
+          </label>
+          <input
+            id="fullName"
+            type="text"
+            formControlName="fullName"
+            autocomplete="name"
+            placeholder="Nguyễn Văn A"
+            class="w-full rounded-lg border bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-brass/40 transition-colors"
+            [class.border-line]="!hasFieldError('fullName')"
+            [class.border-red-500]="hasFieldError('fullName')"
+          />
+          @if (hasFieldError('fullName')) {
+            <p class="mt-1 text-xs text-red-600">{{ fieldErrorMessage('fullName') }}</p>
+          }
+        </div>
+
+        <!-- Phone + email row -->
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label for="phone" class="block text-sm font-medium text-brown-deep mb-1.5">
+              Số điện thoại <span class="text-red-600">*</span>
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              autocomplete="tel"
+              placeholder="0912 345 678"
+              class="w-full rounded-lg border bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-brass/40 transition-colors"
+              [class.border-line]="!hasFieldError('phone')"
+              [class.border-red-500]="hasFieldError('phone')"
+            />
+            @if (hasFieldError('phone')) {
+              <p class="mt-1 text-xs text-red-600">{{ fieldErrorMessage('phone') }}</p>
+            }
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-brown-deep mb-1.5">
+              Email <span class="text-muted text-xs font-normal">(tuỳ chọn)</span>
+            </label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              autocomplete="email"
+              placeholder="abc@gmail.com"
+              class="w-full rounded-lg border bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-brass/40 transition-colors"
+              [class.border-line]="!hasFieldError('email')"
+              [class.border-red-500]="hasFieldError('email')"
+            />
+            @if (hasFieldError('email')) {
+              <p class="mt-1 text-xs text-red-600">{{ fieldErrorMessage('email') }}</p>
+            } @else {
+              <p class="mt-1 text-xs text-muted">Nếu nhập sẽ nhận email xác nhận tự động.</p>
+            }
+          </div>
+        </div>
+
+        <!-- Number of people -->
+        <div>
+          <label for="numberOfPeople" class="block text-sm font-medium text-brown-deep mb-1.5">
+            Số người tham dự <span class="text-red-600">*</span>
+          </label>
+          <input
+            id="numberOfPeople"
+            type="number"
+            min="1"
+            max="20"
+            formControlName="numberOfPeople"
+            class="w-32 rounded-lg border bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-brass/40 transition-colors"
+            [class.border-line]="!hasFieldError('numberOfPeople')"
+            [class.border-red-500]="hasFieldError('numberOfPeople')"
+          />
+          @if (hasFieldError('numberOfPeople')) {
+            <p class="mt-1 text-xs text-red-600">{{ fieldErrorMessage('numberOfPeople') }}</p>
+          } @else {
+            <p class="mt-1 text-xs text-muted">Bao gồm bạn và người đi cùng (vợ, con, người thân).</p>
+          }
+        </div>
+
+        <!-- Note -->
+        <div>
+          <label for="note" class="block text-sm font-medium text-brown-deep mb-1.5">
+            Ghi chú <span class="text-muted text-xs font-normal">(tuỳ chọn)</span>
+          </label>
+          <textarea
+            id="note"
+            rows="3"
+            formControlName="note"
+            placeholder="Ví dụ: đi cùng cha mẹ lớn tuổi, cần hỗ trợ chỗ ngồi gần…"
+            class="w-full rounded-lg border bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-brass/40 transition-colors resize-y"
+            [class.border-line]="!hasFieldError('note')"
+            [class.border-red-500]="hasFieldError('note')"
+          ></textarea>
+          @if (hasFieldError('note')) {
+            <p class="mt-1 text-xs text-red-600">{{ fieldErrorMessage('note') }}</p>
+          }
+        </div>
+
+        <!-- Error banner -->
+        @if (errorMessage()) {
+          <div class="rounded-xl bg-red-50 border border-red-300 p-4 text-sm text-red-800">
+            <i class="pi pi-exclamation-circle mr-2"></i>
+            {{ errorMessage() }}
+          </div>
+        }
+
+        <!-- Submit -->
+        <div class="flex flex-wrap items-center gap-4 pt-2">
+          <button
+            type="submit"
+            class="btn-primary px-8 py-3.5 text-base disabled:opacity-60 disabled:cursor-not-allowed"
+            [disabled]="state() === 'submitting'"
+          >
+            @if (state() === 'submitting') {
+              <i class="pi pi-spin pi-spinner"></i>
+              Đang gửi…
+            } @else {
+              <i class="pi pi-send"></i>
+              Gửi đăng ký
+            }
+          </button>
+          <p class="text-xs text-muted">
+            Bằng việc đăng ký, quý vị đồng ý chùa sử dụng SĐT để liên hệ xác nhận.
+          </p>
+        </div>
+      </form>
+    }
+  </section>
+}

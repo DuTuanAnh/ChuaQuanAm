@@ -9,6 +9,9 @@ import dharmaRoute from './routes/dharma.route.js';
 import eventsRoute from './routes/events.route.js';
 import photosRoute from './routes/photos.route.js';
 import postsRoute from './routes/posts.route.js';
+import registrationsRoute from './routes/registrations.route.js';
+import webhooksRoute from './routes/webhooks.route.js';
+import * as email from './services/email.service.js';
 import * as sanity from './services/sanity.service.js';
 import * as youtube from './services/youtube.service.js';
 import { swaggerSpec } from './swagger.js';
@@ -149,7 +152,9 @@ app.get('/api/health', (_req, res) => {
     status: 'ok',
     services: {
       sanity: sanity.isConfigured() ? 'configured' : 'not configured (placeholder)',
+      sanityWrite: sanity.isWriteConfigured() ? 'configured' : 'not configured',
       youtube: youtube.isConfigured() ? 'configured' : 'not configured',
+      email: email.isEmailConfigured() ? 'configured' : 'not configured',
     },
     cache: cache.getStats(),
     timestamp: new Date().toISOString(),
@@ -164,6 +169,21 @@ app.use('/api/posts',  cacheMiddleware(TEN_MIN),  postsRoute);
 app.use('/api/dharma', cacheMiddleware(TEN_MIN),  dharmaRoute);
 app.use('/api/events', cacheMiddleware(FIVE_MIN), eventsRoute);
 app.use('/api/photos', cacheMiddleware(TEN_MIN),  photosRoute);
+
+// Registrations — NO cache (writes must always hit Sanity; capacity reads
+// also need to be fresh so two simultaneous submits can't double-book seats).
+//
+// Order matters: the more specific path (`/export`) must come FIRST so its
+// Basic Auth middleware runs before the router handles the request. Public
+// POST + capacity GET fall through to the unprotected mount below.
+app.use('/api/registrations/export', basicAuth);
+app.use('/api/registrations', registrationsRoute);
+
+// Webhooks (Sanity-signed). No cache, no Basic Auth — signature header
+// is the auth mechanism. Route uses its own raw body parser to preserve
+// bytes for signature verification (mounted BEFORE express.json affects it
+// because the route consumes the stream itself).
+app.use('/api/webhooks', webhooksRoute);
 
 /**
  * @swagger

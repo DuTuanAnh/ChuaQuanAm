@@ -4,5 +4,12 @@ import dharma from './dharma';
 import event from './event';
 import photo from './photo';
 import post from './post';
+import registration from './registration';
 
-export const schemaTypes: SchemaTypeDefinition[] = [post, dharma, event, photo];
+export const schemaTypes: SchemaTypeDefinition[] = [
+  post,
+  dharma,
+  event,
+  photo,
+  registration,
+];
