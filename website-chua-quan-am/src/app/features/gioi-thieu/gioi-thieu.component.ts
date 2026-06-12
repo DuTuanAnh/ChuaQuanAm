@@ -33,7 +33,7 @@ export class GioiThieuComponent {
       title: 'Một mái chùa giữa lòng quê hương',
       body:
         'Chùa Quan Âm là tự viện Phật giáo Bắc Tông toạ lạc tại Mỹ Đông, Đông Hải, ' +
-        'Ninh Thuận — nơi Phật tử bốn phương về nương tựa Tam Bảo, lấy hạnh nguyện ' +
+        'Khánh Hoà — nơi Phật tử bốn phương về nương tựa Tam Bảo, lấy hạnh nguyện ' +
         'của Đức Bồ Tát Quán Thế Âm làm chỗ quay về của tâm. ' +
         '{{TODO: năm thành lập, vị khai sơn, hoàn cảnh hình thành — chờ thầy duyệt.}}',
       tone: 'sunrise',

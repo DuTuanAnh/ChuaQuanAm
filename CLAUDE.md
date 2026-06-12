@@ -21,7 +21,7 @@ Tính năng nâng cao:
 Đây là dữ liệu thật, **được dùng trực tiếp** trong UI (không cần `{{TODO}}`):
 
 - **Tên**: Chùa Quan Âm
-- **Địa chỉ**: Mỹ Đông, Đông Hải, Ninh Thuận
+- **Địa chỉ**: Mỹ Đông, Đông Hải, Khánh Hoà
 - **Điện thoại**: 0984 148 802
 - **Giờ mở cửa**: Mở cả ngày
 

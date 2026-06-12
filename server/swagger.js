@@ -15,7 +15,7 @@ const options = {
       version: '1.0.0',
       description:
         'Backend API cho website Chùa Quan Âm — tự viện Phật giáo Bắc Tông tại ' +
-        'Mỹ Đông, Đông Hải, Ninh Thuận. Dữ liệu pull từ Sanity CMS, YouTube Data API ' +
+        'Mỹ Đông, Đông Hải, Khánh Hoà. Dữ liệu pull từ Sanity CMS, YouTube Data API ' +
         'dùng để enrich pháp thoại video.',
       contact: { name: 'Văn phòng chùa', phone: '0984 148 802' },
     },
