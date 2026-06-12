@@ -1,19 +1,17 @@
 <header class="sticky top-0 z-50 bg-brown-deep border-b border-brass/25 shadow-sm">
-  <div class="container-narrow flex items-center justify-between h-20">
+  <!-- Wider container + tighter left padding so the logo sits closer to the edge. -->
+  <div class="mx-auto max-w-7xl px-3 md:px-5 flex items-center justify-between h-24">
     <a routerLink="/" class="flex items-center gap-3 group" (click)="closeMobile()">
+      <!-- Crop the bottom text out of the JPG via background-position so only the round
+           logo shows. background-size > 100% scales up the round portion to fill cleanly,
+           avoiding the blurry look of object-fit clipping. -->
       <span
-        class="block w-12 h-12 rounded-full bg-cream overflow-hidden ring-1 ring-brass-bright/40 shadow-soft shrink-0"
-        aria-hidden="true"
-      >
-        <!-- Logo is square with the round image on top + text below. object-position keeps
-             the round portion centered in the circular badge; the bottom text is clipped. -->
-        <img
-          src="assets/logo/logo.jpg"
-          alt=""
-          class="w-full h-[150%] object-cover object-top"
-        />
-      </span>
-      <span class="font-display text-xl text-brass-bright tracking-wide group-hover:text-brass-soft transition-colors">
+        class="block w-16 h-16 md:w-[72px] md:h-[72px] rounded-full bg-cream ring-2 ring-brass-bright/50 shadow-soft shrink-0 bg-no-repeat"
+        style="background-image: url('assets/logo/logo.jpg'); background-size: 145%; background-position: center 30%;"
+        role="img"
+        aria-label="Logo Chùa Quan Âm"
+      ></span>
+      <span class="font-display text-xl md:text-2xl text-brass-bright tracking-wide group-hover:text-brass-soft transition-colors">
         Chùa Quan Âm
       </span>
     </a>
