@@ -1,79 +1,33 @@
 <!-- ============ 1. HERO ============ -->
-<section class="relative h-[80vh] min-h-[560px] overflow-hidden">
-  <!-- Background illustration ({{TODO: thay bằng ảnh chùa thật khi có file)}} -->
-  <svg
+<!--
+  Layout strategy (respects CLAUDE.md temple rules — never overlay text on
+  Buddha statues): the photo fills the section; text content is pinned to
+  the BOTTOM-LEFT in a darker safe zone. A heavy bottom-to-top gradient
+  keeps the upper area (where the Buddha statues sit) clean and readable.
+-->
+<section class="relative h-[88vh] min-h-[620px] overflow-hidden">
+  <!-- Real temple photo (Chánh điện) -->
+  <img
     #heroBg
-    class="absolute inset-0 w-full h-full will-change-transform"
-    preserveAspectRatio="xMidYMax slice"
-    viewBox="0 0 1600 900"
-    aria-hidden="true"
-  >
-    <defs>
-      <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#3D2B1F" />
-        <stop offset="0.45" stop-color="#7A5A45" />
-        <stop offset="0.75" stop-color="#B8860B" stop-opacity="0.9" />
-        <stop offset="1" stop-color="#D4A843" />
-      </linearGradient>
-      <linearGradient id="heroMtnFar" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#5A4030" stop-opacity="0.7" />
-        <stop offset="1" stop-color="#3D2B1F" />
-      </linearGradient>
-      <linearGradient id="heroMtnNear" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#3D2B1F" />
-        <stop offset="1" stop-color="#2C1A0E" />
-      </linearGradient>
-      <radialGradient id="heroSun" cx="0.5" cy="0.5" r="0.5">
-        <stop offset="0" stop-color="#FFE6A6" />
-        <stop offset="0.6" stop-color="#D4A843" stop-opacity="0.6" />
-        <stop offset="1" stop-color="#B8860B" stop-opacity="0" />
-      </radialGradient>
-    </defs>
-    <rect width="1600" height="900" fill="url(#heroSky)" />
-    <!-- sun -->
-    <circle cx="1180" cy="380" r="200" fill="url(#heroSun)" />
-    <circle cx="1180" cy="380" r="80" fill="#FFE6A6" opacity="0.95" />
-    <!-- distant mist clouds -->
-    <ellipse cx="800" cy="440" rx="700" ry="40" fill="#FDF8EF" opacity="0.18" />
-    <ellipse cx="400" cy="490" rx="500" ry="30" fill="#FDF8EF" opacity="0.12" />
-    <!-- far mountains -->
-    <path
-      d="M0 560 Q140 470 280 540 Q440 460 600 530 Q780 470 940 540 Q1120 470 1280 530 Q1440 480 1600 530 L1600 900 L0 900 Z"
-      fill="url(#heroMtnFar)"
-    />
-    <!-- temple silhouette mid -->
-    <g transform="translate(800 600)" fill="#2C1A0E">
-      <path d="M-180 0 Q-100 -10 0 -8 Q100 -10 180 0 L180 70 L-180 70 Z" opacity="0.85" />
-      <g transform="translate(0 -10)">
-        <path d="M-110 0 L0 -90 L110 0 Z" />
-        <path d="M-130 -4 Q-110 -32 -90 -4 M90 -4 Q110 -32 130 -4" stroke="#1F140C" stroke-width="6" fill="none" />
-        <rect x="-70" y="0" width="140" height="80" />
-        <rect x="-12" y="30" width="24" height="50" fill="#0a0612" />
-      </g>
-    </g>
-    <!-- near mountains / foreground -->
-    <path
-      d="M0 700 Q140 640 280 690 Q440 620 600 680 Q780 630 940 690 Q1120 640 1280 690 Q1440 660 1600 690 L1600 900 L0 900 Z"
-      fill="url(#heroMtnNear)"
-    />
-  </svg>
+    src="assets/banner/Banner001.jpg"
+    alt="Chánh điện Chùa Quan Âm"
+    class="absolute inset-0 w-full h-full object-cover will-change-transform"
+    fetchpriority="high"
+    decoding="async"
+  />
 
-  <!-- Dark overlay for text readability -->
+  <!-- Three-stop gradient: clear at top (Buddha visible), strong dark at
+       bottom (text readable). Side gradient on the left further darkens
+       the text-overlay column for clarity, without dimming the statues. -->
   <div
     class="absolute inset-0 pointer-events-none"
-    style="background: linear-gradient(180deg, rgba(44,26,14,0.55) 0%, rgba(44,26,14,0.25) 35%, rgba(44,26,14,0.65) 100%);"
+    style="background:
+      linear-gradient(180deg, rgba(44,26,14,0.35) 0%, rgba(44,26,14,0.15) 28%, rgba(44,26,14,0.55) 65%, rgba(28,16,8,0.85) 100%),
+      linear-gradient(90deg, rgba(28,16,8,0.55) 0%, rgba(28,16,8,0.25) 45%, transparent 70%);"
   ></div>
 
-  <!-- Brass sparkle decorations (subtle, on dark bg) -->
-  <svg class="absolute top-[12%] left-[6%] w-20 opacity-70 pointer-events-none" viewBox="0 0 80 80" aria-hidden="true">
-    <g fill="#D4A843">
-      <circle cx="6" cy="14" r="1.5"/><circle cx="22" cy="6" r="1.2"/>
-      <circle cx="36" cy="22" r="1.4"/><circle cx="14" cy="38" r="1.6"/>
-      <circle cx="48" cy="40" r="1"/><circle cx="30" cy="58" r="1.3"/>
-      <circle cx="60" cy="56" r="1"/><circle cx="48" cy="72" r="1.5"/>
-    </g>
-  </svg>
-  <svg class="absolute top-[8%] right-[8%] w-24 opacity-65 pointer-events-none" viewBox="0 0 100 80" aria-hidden="true">
+  <!-- Brass sparkle decorations (subtle accent) -->
+  <svg class="absolute top-[8%] right-[8%] w-24 opacity-55 pointer-events-none" viewBox="0 0 100 80" aria-hidden="true">
     <g fill="#E8C870">
       <circle cx="6" cy="14" r="1.2"/><circle cx="28" cy="6" r="1.6"/>
       <circle cx="48" cy="20" r="1"/><circle cx="72" cy="10" r="1.4"/>
@@ -81,40 +35,37 @@
       <circle cx="80" cy="32" r="1.5"/><circle cx="60" cy="62" r="1"/>
     </g>
   </svg>
-  <svg class="absolute top-[18%] right-[2%] w-7 opacity-85 pointer-events-none" viewBox="0 0 28 28" aria-hidden="true">
-    <path d="M14 0 L16 12 L28 14 L16 16 L14 28 L12 16 L0 14 L12 12 Z" fill="#D4A843"/>
-  </svg>
-  <svg class="absolute bottom-[34%] left-[14%] w-5 opacity-70 pointer-events-none" viewBox="0 0 22 22" aria-hidden="true">
-    <path d="M11 0 L12.5 9.5 L22 11 L12.5 12.5 L11 22 L9.5 12.5 L0 11 L9.5 9.5 Z" fill="#E8C870"/>
-  </svg>
 
-  <!-- Content -->
+  <!-- Content — anchored to the bottom-left, never crosses the statues -->
   <div
-    class="relative h-full container-narrow flex flex-col justify-center items-center text-center text-cream"
+    class="relative h-full container-narrow flex flex-col justify-end pb-16 md:pb-24 text-cream"
     data-aos="fade-up"
   >
-    <span class="eyebrow text-brass-bright/90">Tự viện Phật giáo Bắc Tông</span>
-    <h1
-      class="mt-6 font-display text-[60px] md:text-[88px] lg:text-[104px] leading-[0.95] tracking-tight"
-      style="color: #D4A843; text-shadow: 0 8px 30px rgba(0,0,0,0.4);"
-    >
-      Chùa Quan Âm
-    </h1>
-    <p class="mt-6 max-w-2xl font-display italic text-lg md:text-2xl text-cream/90">
-      Nương tựa Tam Bảo, an trú trong chánh niệm —
-      <br class="hidden md:block" />một chốn về cho người con Phật.
-    </p>
-    <div class="mt-10 flex flex-wrap gap-4 justify-center">
-      <a routerLink="/phap-thoai" class="btn-primary">
-        Xem pháp thoại
-        <i class="pi pi-arrow-right text-xs"></i>
-      </a>
-      <a
-        routerLink="/hoat-dong"
-        class="btn inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium border border-cream/40 text-cream hover:bg-cream/10 transition-all"
+    <div class="max-w-2xl">
+      <span class="eyebrow text-brass-bright">Tự viện Phật giáo Bắc Tông</span>
+      <h1
+        class="mt-5 font-display text-[56px] md:text-[84px] lg:text-[96px] leading-[0.95] tracking-tight"
+        style="color: #F4D78A; text-shadow: 0 4px 12px rgba(0,0,0,0.7), 0 8px 30px rgba(0,0,0,0.5);"
       >
-        Lịch hoạt động
-      </a>
+        Chùa Quan Âm
+      </h1>
+      <p class="mt-5 font-display italic text-lg md:text-2xl text-cream/95"
+         style="text-shadow: 0 2px 6px rgba(0,0,0,0.6);">
+        Nương tựa Tam Bảo, an trú trong chánh niệm —
+        <br class="hidden md:block" />một chốn về cho người con Phật.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a routerLink="/phap-thoai" class="btn-primary">
+          Xem pháp thoại
+          <i class="pi pi-arrow-right text-xs"></i>
+        </a>
+        <a
+          routerLink="/hoat-dong"
+          class="btn inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium border border-cream/50 text-cream hover:bg-cream/15 backdrop-blur-sm transition-all"
+        >
+          Lịch hoạt động
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -447,51 +398,37 @@
 </section>
 
 <!-- ============ 6. CTA PORTAL ============ -->
+<!--
+  Background photo (Banner002): Phật tử đang công phu, tượng Phật ở hậu cảnh.
+  Text được đặt ở phần TRÊN — phía trên tượng Phật và Phật tử — với gradient
+  đậm chỉ ở vùng có chữ. Phần dưới (Phật tử + tượng) chỉ phủ nhẹ để vẫn nhìn
+  rõ ảnh, tuân thủ quy tắc tôn nghiêm trong CLAUDE.md.
+-->
 <section
-  class="relative mx-6 mb-16 mt-8 py-24 md:py-32 rounded-[48px] overflow-hidden text-center"
-  style="background:
-    radial-gradient(50% 50% at 50% 90%, rgba(255, 200, 130, 0.28), transparent 70%),
-    linear-gradient(180deg, #1a1224 0%, #2a1a2e 55%, #4a2030 100%);
-    color: #f6ead2;"
+  class="relative mx-6 mb-16 mt-8 py-20 md:py-28 rounded-[48px] overflow-hidden text-center min-h-[640px]"
 >
-  <!-- Star field -->
-  <svg class="absolute inset-0 w-full h-full opacity-70 pointer-events-none" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <g fill="#FFE6A6">
-      <circle cx="80" cy="60" r="1.4"/><circle cx="220" cy="120" r="1"/>
-      <circle cx="360" cy="40" r="1.6"/><circle cx="500" cy="160" r="1.2"/>
-      <circle cx="640" cy="80" r="1"/><circle cx="780" cy="40" r="1.4"/>
-      <circle cx="920" cy="140" r="1"/><circle cx="1060" cy="60" r="1.6"/>
-      <circle cx="1200" cy="180" r="1.2"/><circle cx="1340" cy="100" r="1"/>
-      <circle cx="180" cy="280" r="1"/><circle cx="380" cy="340" r="1.4"/>
-      <circle cx="640" cy="280" r="1"/><circle cx="980" cy="340" r="1.2"/>
-      <circle cx="1320" cy="300" r="1.4"/>
-      <circle cx="100" cy="500" r="1.2"/><circle cx="240" cy="600" r="1"/>
-      <circle cx="1380" cy="540" r="1.6"/><circle cx="1300" cy="700" r="1"/>
-      <circle cx="80" cy="780" r="1.4"/><circle cx="320" cy="820" r="1"/>
-      <circle cx="780" cy="800" r="1.2"/><circle cx="1180" cy="840" r="1"/>
-    </g>
-  </svg>
+  <!-- Real temple photo (Phật tử trong khoá lễ) -->
+  <img
+    src="assets/banner/Banner002.jpg"
+    alt="Phật tử trong khoá lễ tại Chùa Quan Âm"
+    class="absolute inset-0 w-full h-full object-cover"
+    loading="lazy"
+    decoding="async"
+  />
 
-  <!-- Light rays from gate -->
-  <svg class="absolute bottom-[60px] left-1/2 -translate-x-1/2 w-[600px] h-[500px] opacity-60 pointer-events-none" viewBox="0 0 600 500" aria-hidden="true">
-    <defs>
-      <linearGradient id="ctaRayG" x1="0.5" y1="1" x2="0.5" y2="0">
-        <stop offset="0" stop-color="#FFE6A6" stop-opacity="0.65"/>
-        <stop offset="1" stop-color="#FFE6A6" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <g transform="translate(300 480)">
-      <polygon points="-220,-460 220,-460 90,0 -90,0" fill="url(#ctaRayG)" opacity="0.6"/>
-      <polygon points="-160,-460 160,-460 60,0 -60,0" fill="url(#ctaRayG)" opacity="0.55"/>
-      <polygon points="-90,-460 90,-460 30,0 -30,0" fill="url(#ctaRayG)" opacity="0.7"/>
-    </g>
-  </svg>
+  <!-- Top-heavy gradient: dark at top (text overlay), softer at bottom so the
+       worshippers + Buddha background remain clearly visible. -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background:
+      linear-gradient(180deg, rgba(20,12,28,0.92) 0%, rgba(28,16,32,0.78) 28%, rgba(40,20,36,0.45) 55%, rgba(40,20,36,0.25) 100%);"
+  ></div>
 
-  <!-- Content -->
+  <!-- Content (top area) -->
   <div class="relative max-w-[760px] mx-auto px-8">
     <span class="eyebrow" style="color: #EAB1B5;">Lời mời</span>
-    <h2 class="mt-4 font-display font-medium leading-[1.1] text-[40px] md:text-[64px]"
-        style="color: #F6EAD2;">
+    <h2 class="mt-4 font-display font-medium leading-[1.1] text-[40px] md:text-[60px]"
+        style="color: #F6EAD2; text-shadow: 0 4px 14px rgba(0,0,0,0.55);">
       Hãy mở cửa lòng,<br/>bước vào
       <em class="italic"
           style="background: linear-gradient(120deg, #F5DEC5, #D4A843 50%, #EAB1B5);
@@ -499,47 +436,15 @@
         không gian tịnh
       </em>.
     </h2>
-    <p class="mt-7 max-w-[520px] mx-auto text-[17px]" style="color: rgba(243,232,210,0.78);">
+    <p class="mt-6 max-w-[560px] mx-auto text-[17px] leading-relaxed"
+       style="color: rgba(246,234,210,0.95); text-shadow: 0 2px 6px rgba(0,0,0,0.6);">
       Quý Phật tử và khách thập phương đều được chào đón. Mời quý vị về chùa
       tham dự khoá lễ, đảnh lễ Tam Bảo, hoặc đơn giản tìm một khoảnh khắc tĩnh lặng.
     </p>
 
-    <!-- Architectural gate (mái + cột + cửa vòm + figure) -->
-    <div class="relative mx-auto mt-14" style="width: 320px; height: 440px;">
-      <!-- Roof -->
-      <svg class="absolute -top-[34px] left-1/2 -translate-x-1/2" style="width: 380px;" viewBox="0 0 380 60" aria-hidden="true">
-        <path d="M10 50 Q10 30 50 30 L330 30 Q370 30 370 50 L380 60 L0 60 Z" fill="#3A1A2A" stroke="rgba(232, 175, 110, 0.4)" stroke-width="1"/>
-        <path d="M0 30 L190 0 L380 30 L370 35 L190 8 L10 35 Z" fill="#2A1018" stroke="rgba(232, 175, 110, 0.35)" stroke-width="1"/>
-        <rect x="184" y="0" width="12" height="14" fill="rgba(232,175,110,0.5)"/>
-      </svg>
-      <!-- Pillars -->
-      <span class="absolute top-[60px] bottom-0 -left-[34px] w-[28px] rounded-t border border-b-0"
-            style="background: linear-gradient(180deg, rgba(196,154,63,0.35), rgba(92,23,23,0.7));
-                   border-color: rgba(232, 175, 110, 0.35);"></span>
-      <span class="absolute top-[60px] bottom-0 -right-[34px] w-[28px] rounded-t border border-b-0"
-            style="background: linear-gradient(180deg, rgba(196,154,63,0.35), rgba(92,23,23,0.7));
-                   border-color: rgba(232, 175, 110, 0.35);"></span>
-      <!-- Door (glowing arch) -->
-      <div class="absolute bottom-0 left-1/2 -translate-x-1/2"
-           style="width: 240px; height: 380px;
-                  border-radius: 120px 120px 6px 6px;
-                  background: radial-gradient(ellipse at 50% 65%, rgba(255,238,180,0.95) 0%, rgba(245, 200, 130, 0.78) 32%, rgba(196, 110, 60, 0.55) 65%, rgba(64, 16, 28, 0.85) 100%);
-                  box-shadow: 0 0 140px rgba(255, 220, 150, 0.6), 0 0 260px rgba(255, 200, 130, 0.38), inset 0 0 60px rgba(255,236,180,0.5);">
-      </div>
-      <!-- Figure inside door -->
-      <span class="absolute bottom-[18px] left-1/2 -translate-x-1/2"
-            style="width: 40px; height: 90px;
-                   background: linear-gradient(180deg, #0a0612 0%, #1a0e1a 100%);
-                   border-radius: 18px 18px 4px 4px;
-                   filter: drop-shadow(0 -10px 22px rgba(255, 220, 150, 0.55));">
-        <span class="absolute -top-4 left-1/2 -translate-x-1/2"
-              style="width: 18px; height: 22px; background: #0a0612; border-radius: 50% 50% 40% 40%;"></span>
-      </span>
-    </div>
-
     <a routerLink="/lien-he"
-       class="inline-flex items-center gap-2 mt-12 rounded-full px-7 py-3 text-sm font-medium transition-all"
-       style="background: rgba(212, 168, 67, 0.15); color: #D4A843; border: 1px solid rgba(212, 168, 67, 0.4);">
+       class="inline-flex items-center gap-2 mt-10 rounded-full px-7 py-3 text-sm font-medium transition-all backdrop-blur-sm hover:bg-brass/30"
+       style="background: rgba(212, 168, 67, 0.22); color: #F4D78A; border: 1px solid rgba(212, 168, 67, 0.55); text-shadow: 0 1px 4px rgba(0,0,0,0.5);">
       Liên hệ &amp; đường đến chùa
       <i class="pi pi-arrow-right text-xs"></i>
     </a>
